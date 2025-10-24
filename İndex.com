@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ömer'den Zehra'ya ❤️</title>
+  <style>
+    body {
+      background-color: #fbecec;
+      color: #5a2a27;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 60px;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    p {
+      font-size: 20px;
+    }
+    a {
+      color: #c2185b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ömer'den Zehra'ya ❤️</h1>
+  <p>Bu site sadece senin için hazırlandı.</p>
+  <p>Spotify listem:<br>
+    <a href="https://open.spotify.com/playlist/7FJwt4lc6hKPafjBSqOgZX?si=y1a4XsVHQB-vvo9Sv-es9A" target="_blank">
+      Dinlemek için tıkla 🎶
+    </a>
+  </p>
+</body>
+</html>
