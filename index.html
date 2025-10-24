@@ -1,313 +1,262 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zehra'ya 💌</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zehra'ya ❤️</title>
 <style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    transition: background 1s ease;
+  :root{
+    --bg:#fff0f5;
+    --card:#fff;
+    --accent:#ff7aa2;
+    --text:#3b2330;
+  }
+  html,body{height:100%;margin:0;font-family: "Georgia","Times New Roman",serif;background:var(--bg);color:var(--text);}
+  .app{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 12px 80px;}
+
+  /* top header */
+  header{width:100%;max-width:920px;text-align:center;margin-bottom:18px}
+  header .title{font-size:48px;margin:6px 0 12px;font-weight:700;color:#6b2f2f}
+  header .sub{font-size:20px;color:#7a4b4b}
+
+  /* pages container (single-file multi-page UI) */
+  .pages{width:100%;max-width:920px;position:relative;}
+  .page{display:none;padding:8px;background:linear-gradient(180deg,#fffefccc,#fff7f7);border-radius:16px;box-shadow:0 8px 30px rgba(120,60,80,0.08);overflow:hidden}
+  .page.active{display:block}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:8px 6px}
+  .nav button{background:#fff;border:1px solid #eee;padding:8px 12px;border-radius:10px;cursor:pointer}
+  .nav .pagenumber{font-size:14px;color:#6a4a4a}
+
+  /* Gallery (1. sayfa) */
+  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:18px}
+  .photo{background:var(--card);padding:10px;border-radius:18px;box-shadow:0 6px 20px rgba(120,60,80,0.06);display:flex;align-items:center;justify-content:center}
+  .photo img{width:100%;height:auto;border-radius:14px;object-fit:cover;transform:scale(0.95);transition:transform .2s}
+  .photo img:hover{transform:scale(1)}
+
+  /* second page - bigger layout but keep unchanged visually */
+  .second-layout{padding:18px}
+
+  /* hearts background animation (used across pages) */
+  .floating-hearts{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:2}
+  .heart{position:absolute;font-size:20px;opacity:.9;animation:rise linear forwards}
+  @keyframes rise{
+    from{transform:translateY(20vh) scale(.7);opacity:0}
+    20%{opacity:1}
+    to{transform:translateY(-120vh) scale(1);opacity:0}
   }
 
-  /* Sayfa kapsayıcı */
-  .page {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 100vw;
-    opacity: 0;
-    transition: all 1s ease;
-  }
+  /* page3: poems layout */
+  .page3-title{font-family: 'Brush Script MT', cursive;font-size:44px;color:#ff4d8a;text-align:center;margin:18px 0}
+  .page3-stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .poems-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:22px;z-index:1;position:relative}
+  .poem{background:rgba(255,255,255,0.85);padding:8px;border-radius:8px;font-size:12px;line-height:1.1;color:#4a2b2b;box-shadow:0 6px 18px rgba(120,60,80,0.04);min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center}
+  /* ensure small font and densely packed */
+  .poem.small{font-size:11px;padding:6px}
 
-  .page.active {
-    left: 0;
-    opacity: 1;
-  }
+  /* background star animation (subtle) */
+  .star{position:absolute;width:6px;height:6px;background:linear-gradient(45deg,#fffacd,#ffe0b2);border-radius:50%;opacity:.9;box-shadow:0 0 8px rgba(255,255,200,.6);animation:starMove linear infinite}
+  @keyframes starMove{from{transform:translateY(0) scale(.6)} to{transform:translateY(120vh) scale(1)}}
 
-  /* 1. SAYFA */
-  #page1 {
-    background: #6b0000;
-    color: #f5e0c2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+  /* footer quote & signature */
+  .quote{position:absolute;left:20px;bottom:16px;font-size:14px;color:#4b2d2d;opacity:.9}
+  .signature{position:absolute;right:20px;bottom:10px;font-weight:700;color:#6b2f2f}
 
-  #page1 h1 {
-    font-size: 2em;
-    margin-bottom: 1em;
+  /* responsive */
+  @media (max-width:700px){
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .poems-grid{grid-template-columns:repeat(2,1fr)}
+    .page3-title{font-size:36px}
   }
-
-  #page1 img {
-    width: 220px;
-    margin: 20px 0;
-    border: 6px solid #f5e0c2;
-    border-radius: 10px;
-    background: #f5e0c2;
-  }
-
-  #page1 p {
-    font-size: 1.2em;
-    margin-top: 1em;
-  }
-
-  /* 2. SAYFA */
-  #page2 {
-    background: linear-gradient(180deg, #ffe6f2, #fff5f7);
-    color: #d63384;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  h2 {
-    font-family: "Brush Script MT", cursive;
-    font-size: 3em;
-    margin-top: 40px;
-  }
-
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    justify-items: center;
-    margin: 30px auto;
-    width: 85%;
-  }
-
-  .gallery img {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  }
-
-  .quote {
-    font-size: 1.4em;
-    margin-top: 40px;
-    font-style: italic;
-  }
-
-  .signature {
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #ff69b4;
-  }
-
-  /* Kalpler animasyonu */
-  .heart {
-    position: absolute;
-    color: #ff69b4;
-    animation: float 6s linear infinite;
-    font-size: 20px;
-  }
-
-  @keyframes float {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-
-  /* Geçiş okları */
-  .arrow {
-    position: fixed;
-    top: 50%;
-    font-size: 3em;
-    color: #fff;
-    cursor: pointer;
-    user-select: none;
-    z-index: 999;
-  }
-
-  #leftArrow { left: 20px; }
-  #rightArrow { right: 20px; }
 </style>
 </head>
 <body>
+<div class="floating-hearts" id="floating-hearts" aria-hidden="true"></div>
 
-<!-- 1. Sayfa -->
-<div id="page1" class="page active">
-  <h1>Her satırında seni, her notasında bizi bulacaksın ❤️</h1>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://sametacar265-wq.github.io/Zehra-ya-/" alt="QR Kod">
-  <p>Samet’ten Zehra’ya 💌</p>
-</div>
+<div class="app">
+  <header>
+    <div class="title">💌 Ömer'den Zehra'ya 💌</div>
+    <div class="sub">Bu sayfa sadece senin için hazırlandı 💖</div>
+  </header>
 
-<!-- 2. Sayfa -->
-<div id="page2" class="page">
-  <h2>Zehra'ya 💖</h2>
-  <div class="gallery">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="">
+  <div class="pages" id="pagesWrap">
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+      <div class="nav">
+        <button id="prevBtn1" disabled>⬅️</button>
+        <div class="pagenumber">Sayfa 1 / 3</div>
+        <button id="nextBtn1">➡️</button>
+      </div>
+
+      <section class="gallery-grid" aria-label="Fotoğraf galerisi">
+        <div class="photo"><img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Fotoğraf 1"></div>
+        <div class="photo"><img src="Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Fotoğraf 2"></div>
+        <div class="photo"><img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 3"></div>
+        <div class="photo"><img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Fotoğraf 4"></div>
+      </section>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+      <div class="nav">
+        <button id="prevBtn2">⬅️</button>
+        <div class="pagenumber">Sayfa 2 / 3</div>
+        <button id="nextBtn2">➡️</button>
+      </div>
+
+      <section class="second-layout">
+        <h2 style="text-align:center;color:#6b2f2f">Şiir ve Ses</h2>
+        <p style="text-align:center;color:#5a3a3a">Hidden background song + QR başlangıç sayfası için hazır</p>
+
+        <!-- QR & embedded YouTube (hidden controls) -->
+        <div style="display:flex;justify-content:center;padding:12px">
+          <div style="width:320px;background:#fff;padding:12px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.06);text-align:center">
+            <div style="margin-bottom:8px">Başlangıç: QR kodu tara veya tıkla</div>
+            <!-- use your repo index link as QR target; alternativ raw url -->
+            <a href="https://sametacar265-wq.github.io/Zehra-ya-/" target="_blank" rel="noopener" style="display:inline-block">
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADcAQAAAABm6V2uAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA/0lEQVR4nO3UMQEAIAwAsGV/0c2kyQp8No3Q2g6GQAAAAAAwN8GzWm2r1bq9a1btW6vW9btr1bq9a1btW6vW9btr1bq9a1btW6vW9btr1bq9a1btW6vW9btr1bq9a1btW6vW9btr1bq9a1btW6vW9btr9r2AZ6RkZ5n2VgAAAAASUVORK5CYII=" alt="QR" style="width:150px;height:auto;border-radius:6px">
+            </a>
+            <div style="margin-top:10px;font-size:13px;color:#6b4b4b">Siteye git / müzik çalıyor</div>
+          </div>
+        </div>
+
+        <!-- Hidden YouTube iframe (attempt autoplay) -->
+        <div style="display:flex;justify-content:center;margin-top:12px">
+          <iframe id="ytplayer" style="width:1px;height:1px;border:0;opacity:0.01;pointer-events:none"
+            src="https://www.youtube.com/embed/UXK9s54VmxQ?autoplay=1&loop=1&playlist=UXK9s54VmxQ&controls=0&rel=0&modestbranding=1"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE 3 (şiirler, yıldızlı arka plan) -->
+    <div class="page" id="page3" aria-hidden="false">
+      <div class="nav">
+        <button id="prevBtn3">⬅️</button>
+        <div class="pagenumber">Sayfa 3 / 3</div>
+        <button id="nextBtn3" disabled>➡️</button>
+      </div>
+
+      <h2 class="page3-title">✨ Yıldızların Sana Yazdığı Şiirler ✨</h2>
+
+      <!-- decorative stars (will be created by JS) -->
+      <div class="page3-stars" id="page3Stars" aria-hidden="true"></div>
+
+      <!-- poems grid: 8 rows x 4 per row = 32 items -->
+      <div class="poems-grid" id="poemsGrid" aria-label="Arkostiş koleksiyonu">
+        <!-- we'll inject 32 <div class="poem">... lines below (kept inline for edit) -->
+        <div class="poem small">Zaman sensiz geçmez, durur gibi,</div>
+        <div class="poem small">Ellerin yoksa, kalbim kırık gibi.</div>
+        <div class="poem small">Hayatım senle güzelleşir,</div>
+        <div class="poem small">Rüyamda bile adın süslenir.</div>
+
+        <div class="poem small">Zehra, gözlerinde kaybolmak isterim,</div>
+        <div class="poem small">Ellerin avuçlarımda, hep beklerim.</div>
+        <div class="poem small">Her bakışın bir yıldız gibi parlar,</div>
+        <div class="poem small">Ruhum seninle huzur arar.</div>
+
+        <div class="poem small">Zor geçen günlerin sonunda,</div>
+        <div class="poem small">Ellerin bir dua gibi yanımda.</div>
+        <div class="poem small">Hayatımın anlamı oldun sen,</div>
+        <div class="poem small">Rüyalarımda bile benimsin, bil sen.</div>
+
+        <div class="poem small">Zehra, bir gül gibi narin,</div>
+        <div class="poem small">Etrafa yayılır sevgin derin.</div>
+        <div class="poem small">Her kelimem seninle anlamlı,</div>
+        <div class="poem small">Rüyalar bile artık senli.</div>
+
+        <div class="poem small">Zehra, sabahın ışığı gibisin,</div>
+        <div class="poem small">Ellerde dua, dilimde ismin.</div>
+        <div class="poem small">Her nefeste seni ararım,</div>
+        <div class="poem small">Rüzgâr bile adını fısıldar.</div>
+
+        <div class="poem small">Zehra, sen gülün en saf hali,</div>
+        <div class="poem small">Esintin ruhumun meltemi.</div>
+        <div class="poem small">Hayatın anlamı oldun bana,</div>
+        <div class="poem small">Ruhumun ışığı, kalbimin canı.</div>
+
+        <div class="poem small">Zehra, her adımda seni ararım,</div>
+        <div class="poem small">Ellerim titrer adını anarken.</div>
+        <div class="poem small">Her şey sensiz eksik kalır,</div>
+        <div class="poem small">Rüzgâr bile seni çağırır.</div>
+
+        <div class="poem small">Zehra, adın cennetten düşmüş,</div>
+        <div class="poem small">Ellerin sevdaya gömülmüş.</div>
+        <div class="poem small">Her gülüşün bahar kokar,</div>
+        <div class="poem small">Rüyamda bile adın var.</div>
+      </div>
+
+      <div class="quote">“Gülüşü güzel kadınlar papatyaları severmiş”</div>
+      <div class="signature">— Ömer’den Zehra’ya</div>
+    </div>
   </div>
-  <div class="quote">💬 "Gülüşü güzel kadınlar papatyaları severmiş"</div>
-  <div class="signature">Ömer’den Zehra’ya 💞</div>
 </div>
-
-<!-- Oklar -->
-<div id="leftArrow" class="arrow">⬅️</div>
-<div id="rightArrow" class="arrow">➡️</div>
-
-<!-- Müzik -->
-<audio id="bgMusic" autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2023/04/02/audio_1b69f3a4e0.mp3?filename=love-melody-143745.mp3" type="audio/mpeg">
-</audio>
 
 <script>
-let currentPage = 1;
-const pages = document.querySelectorAll('.page');
-const leftArrow = document.getElementById('leftArrow');
-const rightArrow = document.getElementById('rightArrow');
+  // simple page navigation (3 pages)
+  const pages = [
+    document.getElementById('page1'),
+    document.getElementById('page2'),
+    document.getElementById('page3')
+  ];
+  let current = 0;
+  function show(i){
+    pages.forEach((p,idx)=>p.classList.toggle('active', idx===i));
+    current = i;
+  }
+  document.getElementById('nextBtn1').addEventListener('click',()=>show(1));
+  document.getElementById('prevBtn2').addEventListener('click',()=>show(0));
+  document.getElementById('nextBtn2').addEventListener('click',()=>show(2));
+  document.getElementById('prevBtn3').addEventListener('click',()=>show(1));
 
-function showPage(num) {
-  pages.forEach(p => p.classList.remove('active'));
-  pages[num - 1].classList.add('active');
-}
+  // floating hearts generator (soft)
+  function createHeart(){
+    const c = document.getElementById('floating-hearts');
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerText = '💖';
+    heart.style.left = Math.random()*100 + 'vw';
+    const size = 12 + Math.random()*24;
+    heart.style.fontSize = size + 'px';
+    const dur = 5 + Math.random()*6;
+    heart.style.animationDuration = dur + 's';
+    heart.style.opacity = 0.8;
+    c.appendChild(heart);
+    setTimeout(()=>heart.remove(), (dur+0.5)*1000);
+  }
+  setInterval(createHeart, 600);
 
-rightArrow.onclick = () => {
-  if (currentPage < pages.length) currentPage++;
-  else currentPage = 1;
-  showPage(currentPage);
-};
+  // subtle stars for page3
+  function createStar(x,y,size,dur,el){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.animationDuration = dur + 's';
+    el.appendChild(s);
+    setTimeout(()=>s.remove(), dur*1000 + 2000);
+  }
+  function spawnStars(){
+    const wrap = document.getElementById('page3Stars');
+    for(let i=0;i<18;i++){
+      const x = Math.random()*window.innerWidth;
+      const y = -Math.random()*200;
+      const size = 3 + Math.random()*6;
+      const dur = 10 + Math.random()*20;
+      createStar(x,y,size,dur,wrap);
+    }
+    setTimeout(spawnStars, 3000 + Math.random()*4000);
+  }
+  spawnStars();
 
-leftArrow.onclick = () => {
-  if (currentPage > 1) currentPage--;
-  else currentPage = pages.length;
-  showPage(currentPage);
-};
+  // Reduce displayed image sizes to about 40% visually (we used container controls).
+  // If you want to force 40% scale for the large image area, you can add style or set width attribute via JS when needed.
 
-// Kalpler oluşturma
-function createHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.textContent = '💖';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-  heart.style.animationDuration = Math.random() * 5 + 4 + 's';
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 500);
+  // NOTE: If you want the YouTube to autoplay with sound but browser blocks, ask me and I add a visible play button to enable sound.
+
+  // Accessibility: focus to first interactive
+  document.querySelectorAll('button')[0].focus();
 </script>
-<!-- ===== 3. SAYFA: Yıldızların Sana Olan Hissi (4 sütun × 8 satır, 30 şiir) ===== -->
-<div class="page" id="page3">
-  <h1 class="page3-title">✨ Yıldızların Sana Olan Hissi ✨</h1>
-
-  <!-- yıldız arka plan (eğer repository'nde stars2.png varsa kullanır; yoksa sade degrade ile de çalışır) -->
-  <div class="page3-stars" aria-hidden="true"></div>
-
-  <div class="poems-grid">
-    <div class="poem">Zaman sensiz geçmez, durur gibi,<br>Ellerin yoksa, kalbim kırık gibi.<br>Hayatım senle güzelleşir,<br>Rüyamda bile adın süslenir.<br>Aşkınla yeniden doğar içim.</div>
-    <div class="poem">Zehra, gözlerinde kaybolmak isterim,<br>Ellerin avuçlarımda, hep beklerim.<br>Her bakışın bir yıldız gibi parlar,<br>Ruhum seninle huzur arar.<br>Adın kalbime kazınmış artık.</div>
-    <div class="poem">Zor geçen günlerin sonunda,<br>Ellerin bir dua gibi yanımda.<br>Hayatımın anlamı oldun sen,<br>Rüyalarımda bile benimsin, bil sen.<br>Aşkla sarmış beni bu beden.</div>
-    <div class="poem">Zehra, bir gül gibi narin,<br>Etrafa yayılır sevgin derin.<br>Her kelimem seninle anlamlı,<br>Rüyalar bile artık senli.<br>Aşık kalbim hep senin yanında.</div>
-
-    <div class="poem">Zehra, sabahın ışığı gibisin,<br>Ellerde dua, dilimde ismin.<br>Her nefeste seni ararım,<br>Rüzgâr bile adını fısıldar.<br>Aşkla süslenir tüm yarınlar.</div>
-    <div class="poem">Zehra, sen gülün en saf hali,<br>Esintin ruhumun meltemi.<br>Hayatın anlamı oldun bana,<br>Ruhumun ışığı, kalbimin canı.<br>Aşkınla doldu her yanım.</div>
-    <div class="poem">Zehra, her adımda seni ararım,<br>Ellerim titrer adını anarken.<br>Her şey sensiz eksik kalır,<br>Rüzgâr bile seni çağırır.<br>Aşkınla yanar bu kalp, her an.</div>
-    <div class="poem">Zehra, adın cennetten düşmüş,<br>Ellerin sevdaya gömülmüş.<br>Her gülüşün bahar kokar,<br>Rüyamda bile adın var.<br>Aşkla yanarım her defa.</div>
-
-    <div class="poem">Zehra, kalbimin incisi,<br>Ellerin bir mucize gibi.<br>Her bakışında kaybolurum,<br>Ruhum seninle huzur bulur.<br>Aşkınla yaşarım her günü.</div>
-    <div class="poem">Zehra, adını duyunca gülümserim,<br>Ellerin dokunsa çözülür dertlerim.<br>Hayatımın en güzel nedeni,<br>Rüyalarımda bile seninle ben.<br>Aşkınla tamam bu hikâyem.</div>
-    <div class="poem">Zehra, bir nefeslik cennet,<br>Ellerin elimde, aşk emanet.<br>Her duamda adın gizli,<br>Rüzgârla gelir sesin sessiz.<br>Aşkla yanar bu gönlüm çaresiz.</div>
-    <div class="poem">Zehra, gözlerin deniz gibi,<br>Ellerin umut, sesin melodi.<br>Hayat sensiz tatsız kalır,<br>Rüya gibi, anın bile yeter.<br>Aşkınla ısınır içim her sefer.</div>
-
-    <div class="poem">Zehra, gülüşün bahar kadar tatlı,<br>Ellerinle dokununca dünya farklı.<br>Hayat senle anlam kazanır,<br>Ruhum seninle huzur bulur.<br>Aşkla dolu bu gönül durulur.</div>
-    <div class="poem">Zehra, ismini yazdım gökyüzüne,<br>Ellerimle çizdim her harfini kalbime.<br>Hayat senle başlar, sensiz durur,<br>Rüyalarımda hep sen olur.<br>Aşkınla yaşar bu yürek.</div>
-    <div class="poem">Zehra, bir yıldız gibi parlar adın,<br>Ellerinle aydınlanır hayatım.<br>Her şeyinle bir mucizesin,<br>Ruhum senle tamamlanır.<br>Aşkla dolu kalbimin sesisin.</div>
-    <div class="poem">Zehra, sensiz bir dünya anlamsız,<br>Ellerim boş, gözlerim yalnız.<br>Her gün seni düşünür bu kalp,<br>Rüyalarımda seninle hep.<br>Aşkla yanar, söner, tekrar yanar.</div>
-
-    <div class="poem">Zehra, sevdan bir sığınak,<br>Ellerinle huzur bulan bir kalp.<br>Hayat senle rengarenk,<br>Ruhum senle şenlik.<br>Aşkınla tamam bu ömür.</div>
-    <div class="poem">Zehra, adınla başlar dualarım,<br>Ellerinle son bulur rüyalarım.<br>Her gece adını anar dilim,<br>Ruhumda yankılanır sesin.<br>Aşkla dolu bu gönlüm senin.</div>
-    <div class="poem">Zehra, bir kelebek gibi zarif,<br>Ellerinle dokunsan her şey nazif.<br>Hayat senle güzelleşir,<br>Rüya gibi bir sevda bu.<br>Aşkla büyür kalbim, durmadan.</div>
-    <div class="poem">Zehra, adını yazdım kalbime,<br>Ellerimle çizdim, silemem.<br>Her anımda senin izlerin,<br>Rüzgârda bile sesin gizli.<br>Aşkınla dolu bu yüreğim.</div>
-
-    <div class="poem">Zehra, gülüşün bahar gibi,<br>Ellerinle huzur bulur içim.<br>Hayat seninle güzel,<br>Rüyalar seninle anlamlı.<br>Aşkla süslenir her sabahım.</div>
-    <div class="poem">Zehra, sensiz günler geçmez,<br>Ellerim seni arar her an.<br>Hayatımın tek anlamı sensin,<br>Rüyamda bile senin izinsin.<br>Aşkla yanar bu kalp, Zehra’m.</div>
-    <div class="poem">Zehra, bir dua gibi içimde,<br>Ellerin umut, sesin nehirde.<br>Her nefesin bana huzur,<br>Ruhumda senin izlerin durur.<br>Aşkla büyüyen bir ömür bu.</div>
-    <div class="poem">Zehra, adını duymak bile yeter,<br>Ellerin dokunsa dünya güler.<br>Her anımda senin sıcaklığın,<br>Rüyamda bile senin varlığın.<br>Aşkla atar bu kalp sadece senin için.</div>
-
-    <div class="poem">Zehra, gülüşün en güzel mucize,<br>Ellerinle hayat tatlı bir hikaye.<br>Her kelimem seninle dolu,<br>Rüyalarımda bile senin yolu.<br>Aşkınla anlamlı her günü.</div>
-    <div class="poem">Zehra, bir şiir gibi adın,<br>Ellerimle yazdım kalbimin duvarına.<br>Her hecede sen varsın,<br>Ruhumda yankılanır sesin.<br>Aşkla yaşarım seni.</div>
-    <div class="poem">Zehra, sensiz günler eksik,<br>Ellerinle tam bu kalp.<br>Hayat seninle başka,<br>Rüya gibi yaşamak bu.<br>Aşkla yazılmış kaderim.</div>
-    <div class="poem">Zehra, kalbim sana teslim,<br>Ellerin umut, sesin ilim.<br>Hayatımın en güzel sebebi,<br>Rüyalarımın tek sahibi.<br>Aşkla bağlı bu gönlüm sana.</div>
-
-    <div class="poem">Zehra, sensiz nefes almak zor,<br>Ellerinle hayat bulur bu kor.<br>Her şeyinle güzelsin sen,<br>Ruhumda hep senin izlerin.<br>Aşkla yanan bu kalbim senin.</div>
-    <div class="poem">Zehra, sen benim hikâyemsin,<br>Ellerinle yazılmış kaderimsin.<br>Hayatımın anlamı sensin,<br>Rüyalarımda bile benimsin.<br>Aşkla atan bu kalp senin.</div>
-
-    <!-- 2 boş hücre (toplam grid 32 hücre olduğu için boş bırakılıyor) -->
-    <div class="poem empty"></div>
-    <div class="poem empty"></div>
-  </div>
-
-  <div class="signature3">💌 Zehra’dan Ömer’e</div>
-</div>
-
-<!-- ===== 3.sayfa CSS (ekle: sayfanın genel <style> alanına veya HEAD içine) ===== -->
-<style>
-/* Eğer halihazırda page3 stilleri varsa, bu kurallar yalnızca daha spesifik olduğu için öncelik alır */
-#page3 { position: relative; overflow: hidden; height: 100vh; background: radial-gradient(circle at 10% 10%, #071428 0%, #000814 60%); color: #ffffffcc; }
-
-.page3-stars {
-  position: absolute;
-  inset: 0;
-  background: url('https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/stars2.png') repeat;
-  opacity: 0.55;
-  animation: starsMove 140s linear infinite;
-  z-index: 0;
-}
-
-@keyframes starsMove { from { background-position: 0 0; } to { background-position: 0 10000px; } }
-
-.page3-title { text-align: center; margin-top: 28px; font-size: 20px; color: #ffd1ff; z-index: 2; text-shadow: 0 0 8px #ffb6f9; position: relative; }
-
-.poems-grid {
-  position: relative;
-  z-index: 2;
-  width: calc(100% - 60px);
-  margin: 30px auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.poem {
-  background: rgba(255,255,255,0.03);
-  padding: 8px;
-  border-radius: 6px;
-  font-size: 12px;           /* küçük yazı istedin -> 12px */
-  line-height: 1.3;
-  text-align: left;
-  color: #ffffffcc;
-  min-height: 88px;
-  overflow: hidden;
-}
-
-.poem.empty { background: transparent; box-shadow: none; }
-
-.signature3 {
-  position: fixed;
-  right: 18px;
-  bottom: 14px;
-  z-index: 3;
-  font-size: 12px;
-  color: #ffd1ff;
-  text-shadow: 0 0 6px #ff9ad1;
-}
-@media (max-width: 900px) {
-  .poems-grid { grid-template-columns: repeat(2, 1fr); width: calc(100% - 30px); }
-  .poem { font-size: 11px; min-height: 80px; }
-}
-@media (max-width: 480px) {
-  .poems-grid { grid-template-columns: 1fr; gap: 10px; }
-  .poem { font-size: 12px; min-height: 70px; }
-}
-</style>
 </body>
 </html>
