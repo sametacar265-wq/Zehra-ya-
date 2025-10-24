@@ -17,12 +17,12 @@
 
     h1 {
       margin-top: 40px;
-      font-size: 2.5em;
-      text-shadow: 2px 2px 4px #ffb6c1;
+      font-size: 3em;
+      text-shadow: 2px 2px 5px #ffb6c1;
     }
 
     .gallery {
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     .gallery img {
@@ -32,7 +32,6 @@
       box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
     }
 
-    /* 💗 Kalp animasyonu */
     .heart {
       position: fixed;
       top: -10px;
@@ -40,11 +39,30 @@
       font-size: 24px;
       animation: fall linear infinite;
       opacity: 0.9;
+      z-index: 1;
     }
 
     @keyframes fall {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
       100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .quote {
+      font-size: 1.6em;
+      color: #ff66a3;
+      margin-top: 40px;
+      font-style: italic;
+      text-shadow: 1px 1px 4px #ffd6e7;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      font-size: 1.2em;
+      color: #ff3385;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #ffd6e7;
     }
   </style>
 </head>
@@ -58,13 +76,17 @@
     <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 4">
   </div>
 
+  <div class="quote">💫 Gülüşü güzel kadınlar papatyaları severmiş 🌼</div>
+
+  <div class="footer">💌 Ömer'den Zehra'ya 💌</div>
+
   <!-- 💕 Gizli müzik -->
   <audio autoplay loop>
     <source src="https://cdn.pixabay.com/audio/2024/02/12/audio_128486.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    const colors = ['#ff69b4', '#ff1493', '#ffd700', '#0000cd', '#ffb6c1']; // pembe, sarı, lacivert tonları
+    const colors = ['#ff69b4', '#ff1493', '#ffd700', '#0000cd', '#ffb6c1'];
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
