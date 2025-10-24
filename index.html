@@ -3,107 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zehra’ya Özel 💛💙💗</title>
+  <title>Zehra'ya 💌</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      background-color: #fff0f5;
       overflow: hidden;
-      background: linear-gradient(135deg, #fff0f5, #fefefe);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-family: "Poppins", sans-serif;
+      font-family: "Comic Sans MS", cursive;
+      text-align: center;
+      color: #ff4d94;
     }
 
     h1 {
-      color: #e75480;
       margin-top: 40px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      z-index: 2;
-      position: relative;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px #ffb6c1;
     }
 
-    p {
-      font-size: 16px;
-      color: #333;
-      z-index: 2;
-      position: relative;
+    .gallery {
+      margin-top: 30px;
     }
 
-    .galeri {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-      z-index: 2;
-      position: relative;
+    .gallery img {
+      width: 40%;
+      margin: 10px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
     }
 
-    .galeri img {
-      width: 160px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .galeri img:hover {
-      transform: scale(1.1);
-    }
-
-    /* 💛💙💗 Kalp animasyonu */
+    /* 💗 Kalp animasyonu */
     .heart {
       position: fixed;
       top: -10px;
-      font-size: 20px;
+      color: pink;
+      font-size: 24px;
       animation: fall linear infinite;
-      opacity: 0.8;
-      z-index: 1;
+      opacity: 0.9;
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Zehra’ya 💛💙💗</h1>
-  <p>Kalpler senin için düşüyor 💫</p>
+  <h1>Zehra'ya 💖</h1>
 
-  <div class="galeri">
-    <img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Zehra Foto 1">
-    <img src="Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Zehra Foto 2">
-    <img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Zehra Foto 3">
-    <img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Zehra Foto 4">
+  <div class="gallery">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Fotoğraf 1">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Fotoğraf 2">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Fotoğraf 3">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 4">
   </div>
 
-  <script>
-    const colors = ["💛", "💙", "💗"];
+  <!-- 💕 Gizli müzik -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2024/02/12/audio_128486.mp3" type="audio/mpeg">
+  </audio>
 
+  <script>
+    const colors = ['#ff69b4', '#ff1493', '#ffd700', '#0000cd', '#ffb6c1']; // pembe, sarı, lacivert tonları
     function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = colors[Math.floor(Math.random() * colors.length)];
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (3 + Math.random() * 5) + "s"; // düşme süresi
-      heart.style.fontSize = (15 + Math.random() * 25) + "px"; // boyutlar
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+      heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
       document.body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
-      }, 8000);
+      }, 5000);
     }
-
     setInterval(createHeart, 300);
   </script>
 </body>
