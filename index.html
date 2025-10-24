@@ -5,18 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zehra’ya Özel</title>
   <style>
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     body {
-      background-color: #fff0f5;
       font-family: "Poppins", sans-serif;
       text-align: center;
       color: #333;
       margin: 0;
       padding: 0;
+      height: 100vh;
+      background: linear-gradient(-45deg, #ffb6c1, #ffe4e1, #ffc0cb, #fff0f5);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite; /* 💫 Arka plan animasyonu */
     }
+
     h1 {
       color: #e75480;
       margin-top: 40px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
+
     .galeri {
       display: flex;
       flex-wrap: wrap;
@@ -24,16 +42,19 @@
       gap: 20px;
       padding: 20px;
     }
+
     .galeri img {
-      width: 160px; /* 🔹 %40 boyut (küçük ama net) */
+      width: 160px; /* %40 boyut */
       height: auto;
       border-radius: 10px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
       transition: transform 0.3s ease;
     }
+
     .galeri img:hover {
       transform: scale(1.1);
     }
+
     p {
       font-size: 16px;
       color: #444;
