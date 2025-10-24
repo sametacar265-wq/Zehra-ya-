@@ -3,196 +3,280 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zehra'ya 💌</title>
+<title>Zehra’ya</title>
+
 <style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    transition: background 1s ease;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* Sayfa kapsayıcı */
-  .page {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 100vw;
-    opacity: 0;
-    transition: all 1s ease;
-  }
+body {
+  overflow: hidden;
+  font-family: 'Times New Roman', serif;
+}
 
-  .page.active {
-    left: 0;
-    opacity: 1;
-  }
+/* Sayfa geçişleri */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  transition: transform 0.8s ease;
+}
 
-  /* 1. SAYFA */
-  #page1 {
-    background: #6b0000;
-    color: #f5e0c2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+#page1 { transform: translateX(0); }
+#page2 { transform: translateX(100%); }
+#page3 { transform: translateX(200%); }
 
-  #page1 h1 {
-    font-size: 2em;
-    margin-bottom: 1em;
-  }
+body.page2-active #page1 { transform: translateX(-100%); }
+body.page2-active #page2 { transform: translateX(0); }
+body.page2-active #page3 { transform: translateX(100%); }
 
-  #page1 img {
-    width: 220px;
-    margin: 20px 0;
-    border: 6px solid #f5e0c2;
-    border-radius: 10px;
-    background: #f5e0c2;
-  }
+body.page3-active #page1 { transform: translateX(-200%); }
+body.page3-active #page2 { transform: translateX(-100%); }
+body.page3-active #page3 { transform: translateX(0); }
 
-  #page1 p {
-    font-size: 1.2em;
-    margin-top: 1em;
-  }
+button.nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.3);
+  border: none;
+  font-size: 2em;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  z-index: 10;
+}
+#prev { left: 20px; }
+#next { right: 20px; }
 
-  /* 2. SAYFA */
-  #page2 {
-    background: linear-gradient(180deg, #ffe6f2, #fff5f7);
-    color: #d63384;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-  }
+/* 🎵 Arka plan müzik kontrolü gizli */
+audio { display: none; }
 
-  h2 {
-    font-family: "Brush Script MT", cursive;
-    font-size: 3em;
-    margin-top: 40px;
-  }
+/* 🌈 Sayfa 1 - QR ve Müzik */
+#page1 {
+  background: linear-gradient(135deg, #ffc0cb, #fff59d);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #2c2c2c;
+}
 
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    justify-items: center;
-    margin: 30px auto;
-    width: 85%;
-  }
+#page1 h1 {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+}
 
-  .gallery img {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  }
+.qr img {
+  width: 180px;
+  height: 180px;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
 
-  .quote {
-    font-size: 1.4em;
-    margin-top: 40px;
-    font-style: italic;
-  }
+/* 🌸 Sayfa 2 - Kalpler, Sözler, Fotoğraflar */
+#page2 {
+  background: linear-gradient(to bottom right, #ffebf0, #fff6fb);
+  overflow: hidden;
+  position: relative;
+  color: #444;
+}
 
-  .signature {
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #ff69b4;
-  }
+#page2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/hearts.gif');
+  background-size: cover;
+  opacity: 0.3;
+  z-index: 0;
+}
 
-  /* Kalpler animasyonu */
-  .heart {
-    position: absolute;
-    color: #ff69b4;
-    animation: float 6s linear infinite;
-    font-size: 20px;
-  }
+#page2 .text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 80px;
+  font-size: 1.8em;
+  color: #ff1493;
+  text-shadow: 0 0 5px #ff69b4;
+}
 
-  @keyframes float {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
+#page2 .signature {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  color: #ff69b4;
+  font-size: 1em;
+}
 
-  /* Geçiş okları */
-  .arrow {
-    position: fixed;
-    top: 50%;
-    font-size: 3em;
-    color: #fff;
-    cursor: pointer;
-    user-select: none;
-    z-index: 999;
-  }
+.gallery {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
 
-  #leftArrow { left: 20px; }
-  #rightArrow { right: 20px; }
+.gallery img {
+  width: 10%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,105,180,0.4);
+  transition: transform 0.3s;
+}
+.gallery img:hover {
+  transform: scale(1.1);
+}
+
+/* 🌌 Sayfa 3 - Gökyüzü ve Yıldız Efekti */
+#page3 {
+  background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+}
+
+#page3::before {
+  content: "";
+  position: absolute;
+  top: -200px;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: transparent url('https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/stars2.png') repeat top center;
+  animation: moveStars 100s linear infinite;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+@keyframes moveStars {
+  from {background-position: 0 0;}
+  to {background-position: 0 1000px;}
+}
+
+#page3 h1 {
+  text-align: center;
+  font-size: 2em;
+  color: #ffd700;
+  margin-top: 50px;
+  z-index: 1;
+  position: relative;
+  text-shadow: 0 0 10px #ffd700;
+}
+
+.poem-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 90%;
+  margin: 50px auto;
+  z-index: 1;
+  position: relative;
+}
+
+.poem {
+  width: 22%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.8em;
+  text-align: center;
+  line-height: 1.4em;
+  box-shadow: 0 0 8px rgba(255,255,255,0.1);
+  transition: transform 0.3s;
+}
+.poem:hover { transform: scale(1.05); }
+
+.signature2 {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 0.9em;
+  opacity: 0.8;
+  color: #ff69b4;
+  z-index: 1;
+}
 </style>
 </head>
 <body>
 
-<!-- 1. Sayfa -->
-<div id="page1" class="page active">
-  <h1>Her satırında seni, her notasında bizi bulacaksın ❤️</h1>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://sametacar265-wq.github.io/Zehra-ya-/" alt="QR Kod">
-  <p>Samet’ten Zehra’ya 💌</p>
+<!-- 🎵 Arka plan müziği -->
+<audio autoplay loop>
+  <source src="https://github.com/sametacar265-wq/Zehra-ya-/raw/main/M%C3%BCzik/Bu%20A%C5%9Fk%20Burada%20Biter%20-%20%C5%9Eebnem%20Ferah.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 1️⃣ Sayfa -->
+<div class="page" id="page1">
+  <h1>🌸 Zehra’ya Özel 🌸</h1>
+  <p>Bir hikâyenin en güzel başlangıcı sensin...</p>
+  <div class="qr">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://sametacar265-wq.github.io/Zehra-ya-/&amp;size=180x180" alt="QR Kodu">
+  </div>
 </div>
 
-<!-- 2. Sayfa -->
-<div id="page2" class="page">
-  <h2>Zehra'ya 💖</h2>
+<!-- 2️⃣ Sayfa -->
+<div class="page" id="page2">
+  <div class="text">“Gülüşü güzel kadınlar papatyaları severmiş.”</div>
   <div class="gallery">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="">
     <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="">
     <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="">
     <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="">
   </div>
-  <div class="quote">💬 "Gülüşü güzel kadınlar papatyaları severmiş"</div>
-  <div class="signature">Ömer’den Zehra’ya 💞</div>
+  <p class="signature">Ömer’den Zehra’ya 💖</p>
 </div>
 
-<!-- Oklar -->
-<div id="leftArrow" class="arrow">⬅️</div>
-<div id="rightArrow" class="arrow">➡️</div>
+<!-- 3️⃣ Sayfa -->
+<div class="page" id="page3">
+  <h1>Yıldızların Sana Olan Hissi</h1>
+  <div class="poem-container">
+    <div class="poem">
+      <p>Zaman sensiz geçmez, durur gibi,<br>Ellerin yoksa, kalbim kırık gibi.<br>Hayatım senle güzelleşir,<br>Rüyamda bile adın süslenir.<br>Aşkınla yeniden doğar içim.</p>
+    </div>
+    <div class="poem">
+      <p>Zehra, gözlerinde kaybolmak isterim,<br>Ellerin avuçlarımda, hep beklerim.<br>Her bakışın bir yıldız gibi parlar,<br>Ruhum seninle huzur arar.<br>Adın kalbime kazınmış artık.</p>
+    </div>
+    <div class="poem">
+      <p>Zehra, sabahın ışığı gibisin,<br>Ellerde dua, dilimde ismin.<br>Her nefeste seni ararım,<br>Rüzgâr bile adını fısıldar.<br>Aşkla süslenir tüm yarınlar.</p>
+    </div>
+    <!-- 30 şiir buraya aynı biçimde eklenebilir -->
+  </div>
+  <p class="signature2">Zehra’dan Ömer’e 🌙</p>
+</div>
 
-<!-- Müzik -->
-<audio id="bgMusic" autoplay loop>
-  <source src="https://cdn.pixabay.com/download/audio/2023/04/02/audio_1b69f3a4e0.mp3?filename=love-melody-143745.mp3" type="audio/mpeg">
-</audio>
+<!-- ⬅️➡️ Geçiş butonları -->
+<button id="prev" class="nav">⬅️</button>
+<button id="next" class="nav">➡️</button>
 
 <script>
 let currentPage = 1;
-const pages = document.querySelectorAll('.page');
-const leftArrow = document.getElementById('leftArrow');
-const rightArrow = document.getElementById('rightArrow');
+const totalPages = 3;
 
-function showPage(num) {
-  pages.forEach(p => p.classList.remove('active'));
-  pages[num - 1].classList.add('active');
-}
+document.getElementById('next').addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    document.body.className = 'page' + currentPage + '-active';
+  }
+});
 
-rightArrow.onclick = () => {
-  if (currentPage < pages.length) currentPage++;
-  else currentPage = 1;
-  showPage(currentPage);
-};
-
-leftArrow.onclick = () => {
-  if (currentPage > 1) currentPage--;
-  else currentPage = pages.length;
-  showPage(currentPage);
-};
-
-// Kalpler oluşturma
-function createHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.textContent = '💖';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-  heart.style.animationDuration = Math.random() * 5 + 4 + 's';
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 500);
+document.getElementById('prev').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    document.body.className = 'page' + currentPage + '-active';
+  }
+});
 </script>
 
 </body>
