@@ -3,36 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zehra’ya Özel</title>
+  <title>Zehra’ya Özel 💛💙💗</title>
   <style>
-    @keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
     body {
-      font-family: "Poppins", sans-serif;
-      text-align: center;
-      color: #333;
       margin: 0;
-      padding: 0;
       height: 100vh;
-      background: linear-gradient(-45deg, #ffb6c1, #ffe4e1, #ffc0cb, #fff0f5);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite; /* 💫 Arka plan animasyonu */
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff0f5, #fefefe);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: "Poppins", sans-serif;
     }
 
     h1 {
       color: #e75480;
       margin-top: 40px;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      z-index: 2;
+      position: relative;
+    }
+
+    p {
+      font-size: 16px;
+      color: #333;
+      z-index: 2;
+      position: relative;
     }
 
     .galeri {
@@ -41,10 +38,12 @@
       justify-content: center;
       gap: 20px;
       padding: 20px;
+      z-index: 2;
+      position: relative;
     }
 
     .galeri img {
-      width: 160px; /* %40 boyut */
+      width: 160px;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
@@ -55,16 +54,31 @@
       transform: scale(1.1);
     }
 
-    p {
-      font-size: 16px;
-      color: #444;
-      margin: 20px;
+    /* 💛💙💗 Kalp animasyonu */
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Zehra’ya ❤️</h1>
-  <p>Bu sayfa senin için, en özel gülüşe sahip olan kişi için 🌸</p>
+  <h1>Zehra’ya 💛💙💗</h1>
+  <p>Kalpler senin için düşüyor 💫</p>
 
   <div class="galeri">
     <img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Zehra Foto 1">
@@ -72,5 +86,25 @@
     <img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Zehra Foto 3">
     <img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Zehra Foto 4">
   </div>
+
+  <script>
+    const colors = ["💛", "💙", "💗"];
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 5) + "s"; // düşme süresi
+      heart.style.fontSize = (15 + Math.random() * 25) + "px"; // boyutlar
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
 </body>
 </html>
