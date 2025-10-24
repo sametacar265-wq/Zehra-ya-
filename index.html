@@ -3,43 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💌 Ömer'den Zehra'ya 💌</title>
+  <title>Zehra’ya Özel</title>
   <style>
     body {
-      background-color: #ffe6ec;
-      font-family: 'Courier New', monospace;
+      background-color: #fff0f5;
+      font-family: "Poppins", sans-serif;
       text-align: center;
-      color: #5c2a2a;
+      color: #333;
       margin: 0;
       padding: 0;
     }
     h1 {
-      margin-top: 35px;
-      font-size: 1.6em;
+      color: #e75480;
+      margin-top: 40px;
+    }
+    .galeri {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .galeri img {
+      width: 100px; /* 🔹 Fotoğraflar çok küçük hale getirildi */
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .galeri img:hover {
+      transform: scale(1.1);
     }
     p {
-      font-size: 1em;
-      margin-bottom: 25px;
-    }
-    img {
-      width: 10%;
-      max-width: 100px;
-      border-radius: 12px;
-      margin: 12px auto;
-      display: block;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      font-size: 16px;
+      color: #444;
+      margin: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>💌 Ömer'den Zehra'ya 💌</h1>
-  <p>Bu sayfa sadece senin için hazırlandı 💖</p>
+  <h1>Zehra’ya ❤️</h1>
+  <p>Bu sayfa senin için, en özel gülüşe sahip olan kişi için 🌸</p>
 
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Foto 1">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Foto 2">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Foto 3">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Foto 4">
-
-  <p>💫 Sen her zaman özelsin 💫</p>
+  <div class="galeri">
+    <img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Zehra Foto 1">
+    <img src="Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Zehra Foto 2">
+    <img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Zehra Foto 3">
+    <img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Zehra Foto 4">
+  </div>
 </body>
 </html>
