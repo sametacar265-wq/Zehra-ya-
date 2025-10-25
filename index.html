@@ -1,253 +1,163 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Samet’ten Zehra’ya 💗</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zehra'ya</title>
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+  }
+  .page {display:none; height:100vh; width:100vw; position:absolute; top:0; left:0;}
+  .active {display:block;}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-    }
+  /* -------------- 1. SAYFA -------------- */
+  #page1 {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .qr {
+    width:150px; height:150px; margin-bottom:20px;
+  }
+  .buttons {
+    display:flex; gap:20px;
+  }
+  .box {
+    width:140px; height:70px;
+    background-color:#222; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    color:white; font-weight:bold; cursor:pointer;
+    transition:transform 0.3s, background 0.3s;
+  }
+  .box:hover {
+    background:#ff0055;
+    transform:scale(1.1);
+  }
+  .footer-text {
+    position: absolute; bottom:10px; right:15px;
+    font-size:14px; color:#ffb6c1;
+  }
 
-    .page {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      width: 100%;
-      height: 100vh;
-      position: relative;
-    }
+  /* -------------- 2. SAYFA (FOTOĞRAFLAR) -------------- */
+  #page2 {
+    background-color: pink;
+    position: relative;
+    overflow: hidden;
+    display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:15px;
+  }
+  #page2 img {
+    width: 35%;
+    border-radius: 15px;
+    transition: transform 0.4s;
+  }
+  #page2 img:hover {transform: scale(1.1);}
+  .back {position:absolute; top:10px; left:10px; background:#000; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;}
+  .heart {
+    position: absolute;
+    color: #ff6699;
+    font-size: 24px;
+    animation: fall 5s linear infinite;
+  }
+  @keyframes fall {
+    0% {transform: translateY(-10px); opacity:1;}
+    100% {transform: translateY(100vh); opacity:0;}
+  }
 
-    .active {
-      display: flex;
-    }
-
-    /* === 1. SAYFA === */
-    #page1 {
-      background: radial-gradient(circle, #b22222, #3b0000);
-      color: #fff5f5;
-      text-align: center;
-    }
-
-    .qr-card {
-      background-color: #7a0000;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-
-    .qr-card img {
-      width: 220px;
-      height: 220px;
-      border-radius: 10px;
-      margin: 10px 0;
-    }
-
-    .qr-text {
-      font-size: 22px;
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-
-    .qr-from {
-      font-size: 20px;
-      margin-top: 10px;
-      color: #ffe4e1;
-    }
-
-    .menu {
-      margin-top: 30px;
-      display: flex;
-      gap: 25px;
-    }
-
-    .menu button {
-      background: #ffcccc;
-      color: #7a0000;
-      border: none;
-      border-radius: 10px;
-      padding: 15px 25px;
-      font-size: 18px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .menu button:hover {
-      background: #ff9999;
-    }
-
-    /* === 2. SAYFA (FOTOĞRAFLAR) === */
-    #page2 {
-      background: linear-gradient(to bottom, #ffc0cb, #ffb6c1);
-      overflow-y: auto;
-      position: relative;
-    }
-
-    .photo-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 60px 0;
-    }
-
-    .photo-gallery img {
-      width: 180px;
-      height: 180px;
-      border-radius: 20px;
-      object-fit: cover;
-      box-shadow: 0 0 15px rgba(255,105,180,0.5);
-      transition: transform 0.3s;
-    }
-
-    .photo-gallery img:hover {
-      transform: scale(1.05);
-    }
-
-    .heart {
-      position: fixed;
-      font-size: 20px;
-      color: #ff69b4;
-      animation: fall 5s linear infinite;
-    }
-
-    @keyframes fall {
-      0% {transform: translateY(0) rotate(0);}
-      100% {transform: translateY(110vh) rotate(360deg);}
-    }
-
-    /* === 3. SAYFA (ŞİİRLER) === */
-    #page3 {
-      background: linear-gradient(to bottom, #3b0000, #8b0000);
-      color: #ffeaea;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .poem {
-      margin-bottom: 40px;
-      font-size: 18px;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-
-    /* === ORTAK === */
-    .corner-text {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      font-size: 14px;
-      opacity: 0.7;
-    }
-
-    .back-btn {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 26px;
-      cursor: pointer;
-    }
-  </style>
+  /* -------------- 3. SAYFA (ŞİİRLER) -------------- */
+  #page3 {
+    background: linear-gradient(135deg, #400000, #000000);
+    padding:40px;
+    text-align:center;
+    overflow-y:auto;
+  }
+  h2 {color:#ffcccb; margin-bottom:30px;}
+  .poem {
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:25px;
+    line-height:1.6;
+    font-size:15px;
+  }
+  .back3 {position:absolute; top:10px; left:10px; background:#111; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;}
+</style>
 </head>
 <body>
 
-  <!-- === 1. SAYFA === -->
-  <div class="page active" id="page1">
-    <div class="qr-card">
-      <div class="qr-text">Her satırında seni, <br> her notasinda bizi bulacaksın ❤️</div>
-      <img src="qr.png" alt="QR Kod" />
-      <div class="qr-from">Samet’ten Zehra’ya</div>
-    </div>
-    <div class="menu">
-      <button onclick="showPage(2)">📸 Fotoğraflar</button>
-      <button onclick="showPage(3)">💌 Şiirler</button>
-    </div>
+<!-- 1. SAYFA -->
+<div id="page1" class="page active">
+  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=https://sametacar265-wq.github.io/Zehra-ya-/&size=150x150" alt="QR">
+  <div class="buttons">
+    <div class="box" onclick="goToPage(2)">📸 Fotoğraflar</div>
+    <div class="box" onclick="goToPage(3)">💌 Şiirler</div>
+  </div>
+  <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+</div>
+
+<!-- 2. SAYFA -->
+<div id="page2" class="page">
+  <button class="back" onclick="goToPage(1)">⬅ Geri</button>
+  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg">
+  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg">
+  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg">
+  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg">
+  <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+</div>
+
+<!-- 3. SAYFA -->
+<div id="page3" class="page">
+  <button class="back3" onclick="goToPage(1)">⬅ Geri</button>
+  <h2>💫 Yıldızların Sana Olan Hissi 💫</h2>
+
+  <div class="poem">
+  Zehra, bir şiir gibi adın,<br>
+  Ellerimle yazdım kalbimin duvarına.<br>
+  Her hecede sen varsın,<br>
+  Ruhumda yankılanır sesin.<br>
+  Aşkla yaşarım seni.
   </div>
 
-  <!-- === 2. SAYFA === -->
-  <div class="page" id="page2">
-    <button class="back-btn" onclick="showPage(1)">⬅️</button>
-    <div class="photo-gallery">
-      <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 1">
-      <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Fotoğraf 2">
-      <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Fotoğraf 3">
-      <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Fotoğraf 4">
-    </div>
-    <div class="corner-text">Ömer’den Zehra’ya ❤️</div>
+  <div class="poem">
+  Zehra, sensiz günler eksik,<br>
+  Ellerinle tam bu kalp.<br>
+  Hayat seninle başka,<br>
+  Rüya gibi yaşamak bu.<br>
+  Aşkla yazılmış kaderim.
   </div>
 
-  <!-- === 3. SAYFA === -->
-  <div class="page" id="page3">
-    <button class="back-btn" onclick="showPage(1)">⬅️</button>
-    <h1>💫 Yıldızların Sana Olan Hissi 💫</h1>
-    <br>
-
-    <div class="poem">Zehra, bir şiir gibi adın,
-Ellerimle yazdım kalbimin duvarına.
-Her hecede sen varsın,
-Ruhumda yankılanır sesin.
-Aşkla yaşarım seni.</div>
-
-    <div class="poem">Zehra, sensiz günler eksik,
-Ellerinle tam bu kalp.
-Hayat seninle başka,
-Rüya gibi yaşamak bu.
-Aşkla yazılmış kaderim.</div>
-
-    <div class="poem">Zehra, kalbim sana teslim,
-Ellerin umut, sesin ilim.
-Hayatımın en güzel sebebi,
-Rüyalarımın tek sahibi.
-Aşkla bağlı bu gönlüm sana.</div>
-
-    <div class="poem">Zehra, sensiz nefes almak zor,
-Ellerinle hayat bulur bu kor.
-Her şeyinle güzelsin sen,
-Ruhumda hep senin izlerin.
-Aşkla yanan bu kalbim senin.</div>
-
-    <div class="poem">Zehra, sen benim hikâyemsin,
-Ellerinle yazılmış kaderimsin.
-Hayatımın anlamı sensin,
-Rüyalarımda bile benimsin.
-Aşkla atan bu kalp senin.</div>
-
-    <div class="corner-text">Ömer’den Zehra’ya ❤️</div>
+  <div class="poem">
+  Zehra, kalbim sana teslim,<br>
+  Ellerin umut, sesin ilim.<br>
+  Hayatımın en güzel sebebi,<br>
+  Rüyalarımın tek sahibi.<br>
+  Aşkla bağlı bu gönlüm sana.
   </div>
 
-  <script>
-    function showPage(num) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page' + num).classList.add('active');
-    }
+  <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+</div>
 
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.textContent = '💗';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
+<script>
+  function goToPage(num){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+num).classList.add('active');
+  }
 
-    setInterval(() => {
-      if (document.getElementById('page2').classList.contains('active')) {
-        createHeart();
-      }
-    }, 200);
-  </script>
+  // 💗 Kalp animasyonu (sadece 2. sayfa)
+  const page2 = document.getElementById('page2');
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '💗';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+    page2.appendChild(heart);
+    setTimeout(()=>heart.remove(), 5000);
+  }, 300);
+</script>
 </body>
 </html>
