@@ -1,205 +1,333 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zehra ve Ömer</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Poppins", sans-serif;
-      overflow: hidden;
-      background: black;
-      color: white;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zehra'ya — Özel Sayfa</title>
+<style>
+  /* --- Genel düzen --- */
+  :root{
+    --bg-pink:#fdeeee;
+    --accent:#ba5460;
+    --card: rgba(255,255,255,0.9);
+    --text:#3b2330;
+  }
+  html,body{height:100%;margin:0;font-family: "Georgia", "Times New Roman", serif;color:var(--text);background:var(--bg-pink);-webkit-font-smoothing:antialiased;}
+  a{color:inherit}
 
-    .page {
-      width: 100vw;
-      height: 100vh;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      position: relative;
-    }
+  /* --- Page container: sayfalar üst üste --- */
+  .page {
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    overflow:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:30px;
+    box-sizing:border-box;
+    opacity:0;
+    visibility:hidden;
+    transform: translateY(20px);
+    transition: opacity .45s ease, transform .45s ease, visibility .45s;
+  }
+  .page.active { opacity:1; visibility:visible; transform: translateY(0); }
 
-    .active {
-      display: flex;
-    }
+  /* --- Global header area (sayfa 1 üstü) --- */
+  .header {
+    width:100%;
+    max-width:960px;
+    margin:10px auto 20px;
+    text-align:center;
+  }
+  .logo-title { font-family: 'Segoe Script', Georgia, serif; font-size:48px; color:#c44a60; text-shadow:0 4px 14px rgba(196,74,96,0.15); margin:6px 0; }
+  .subtitle { color: #6b3b3f; font-size:18px; margin:8px 0 18px; }
 
-    /* Sayfa geçiş okları */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      transform: translateY(-50%);
-      transition: 0.3s;
-    }
+  /* --- Foto grid (sayfa1) --- */
+  .photos {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:18px;
+    max-width:900px;
+    width:100%;
+    margin: 8px auto;
+  }
+  .photo {
+    background:var(--card);
+    border-radius:18px;
+    overflow:hidden;
+    padding:8px;
+    box-shadow: 0 10px 25px rgba(180,110,120,0.12);
+  }
+  .photo img { width:100%; height:160px; object-fit:cover; display:block; border-radius:12px; }
 
-    .arrow:hover {
-      color: #ff4da6;
-      transform: scale(1.2) translateY(-50%);
-    }
+  /* --- Orta not bubble (sayfa1) --- */
+  .note { width:100%; max-width:720px; text-align:center; font-style:italic; color:#9b4861; margin:18px auto; font-size:20px; }
 
-    #prev {
-      left: 20px;
-    }
+  /* --- Pages navigation arrows (açık ve mobil uyumlu) --- */
+  .nav-arrow {
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:999;
+    width:44px;height:44px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.9); box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    color:#762a2a; font-weight:bold;
+  }
+  .nav-left{ left:12px; }
+  .nav-right{ right:12px; }
 
-    #next {
-      right: 20px;
-    }
+  /* --- Sayfa 2: kırmızı-siyah statik arka plan, şiir kartları --- */
+  #page2 { background: linear-gradient(180deg,#3b0000 0%, #6b0f0f 50%, #2a0000 100%); color: #fde8e8; }
+  .page2-wrap { width:100%; max-width:960px; margin-top:20px; }
+  .page2-title { text-align:center; font-size:34px; color:#ffd1d1; text-shadow:0 6px 18px rgba(0,0,0,0.35); margin-bottom:20px; }
+  .poem-container { background: rgba(0,0,0,0.18); padding:18px; border-radius:14px; color:#ffdede; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); }
+  .poem { margin:18px 0; line-height:1.5; color:#ffefef; }
 
-    /* Sağ alttaki imza */
-    .signature {
-      position: absolute;
-      bottom: 10px;
-      right: 15px;
-      font-size: 0.8rem;
-      color: #ff4da6;
-      opacity: 0.8;
-    }
+  /* sağ altta imza */
+  .signature { position:fixed; right:18px; bottom:12px; color:#ffd7d7; font-style:italic; font-weight:600; text-shadow:0 1px 0 rgba(0,0,0,0.35); }
 
-    /* 1. Sayfa */
-    #page1 {
-      background: linear-gradient(135deg, #ff0066, #660033);
-    }
+  /* --- Sayfa 3: Yıldızlı düzen (grid şiir) --- */
+  #page3 { background: linear-gradient(180deg,#fff7fb 0%, #fdeeee 40%); color:#6b2a3a; }
+  .page3-title { font-size:36px; color:#de4f6a; margin-top:12px; text-align:center; text-shadow:0 6px 14px rgba(222,79,106,0.08);}
+  .poems-grid { width:100%; max-width:1100px; margin:24px auto; display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+  .poem-box { background: rgba(255,255,255,0.88); border-radius:12px; padding:10px 12px; min-height:70px; box-shadow:0 10px 22px rgba(192,120,140,0.06); font-size:12px; line-height:1.2; color:#4b242a; }
 
-    #page1 h1 {
-      font-size: 2.5rem;
-      color: white;
-    }
+  /* responsive */
+  @media (max-width:900px){
+    .photos { grid-template-columns: repeat(2,1fr); }
+    .poems-grid { grid-template-columns: repeat(2,1fr); }
+    .photo img { height:120px; }
+  }
+  @media (max-width:480px){
+    .photos { grid-template-columns: 1fr 1fr; gap:10px; }
+    .logo-title { font-size:32px; }
+    .poems-grid { grid-template-columns: repeat(2,1fr); gap:10px; }
+    .poem-box{font-size:11px}
+  }
 
-    /* 2. Sayfa */
-    #page2 {
-      background: linear-gradient(135deg, #0b0033, #1a0066);
-      color: white;
-      text-shadow: 0 0 10px #fff;
-    }
+  /* kalpler (floating hearts) */
+  .heart {
+    position:fixed;
+    top: -10px;
+    font-size: 18px;
+    pointer-events:none;
+    animation: fall linear forwards;
+    text-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(30deg); opacity:0; }
+  }
 
-    #page2 h1 {
-      font-size: 2.5rem;
-    }
-
-    /* 3. Sayfa */
-    #page3 {
-      background: radial-gradient(circle, #000000, #330000, #660000);
-      color: white;
-      text-shadow: 0 0 10px #fff;
-      overflow-y: auto;
-      padding: 40px 20px;
-    }
-
-    #page3 h1 {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      color: #ffcccc;
-    }
-
-    .poem {
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      padding: 15px;
-      width: 90%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .poem:not(:last-child)::after {
-      content: "⸻";
-      display: block;
-      margin-top: 10px;
-      opacity: 0.5;
-    }
-  </style>
+  /* küçük play butonu (unmute) */
+  .music-toggle { position:fixed; left:12px; bottom:12px; z-index:999; background:#fff; padding:8px 10px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.15); color:#6b2a3a; font-weight:600; }
+</style>
 </head>
 <body>
 
-  <!-- 1. SAYFA -->
-  <div class="page active" id="page1">
-    <h1>💖 Hoş Geldin Zehra 💖</h1>
-    <p>Bu hikâye Ömer’den sana...</p>
-    <div class="signature">Ömer’den Zehra’ya</div>
+<!-- NAV ARROWS -->
+<button class="nav-arrow nav-left" id="prevBtn" aria-label="Önceki">⬅️</button>
+<button class="nav-arrow nav-right" id="nextBtn" aria-label="Sonraki">➡️</button>
+
+<!-- SAYFA 1 -->
+<div class="page active" id="page1" role="region" aria-label="Birinci sayfa - fotoğraflar">
+  <div class="header">
+    <div class="logo-title">💌 Ömer'den Zehra'ya</div>
+    <div class="subtitle">Bu sayfa sadece senin için hazırlandı 💖</div>
   </div>
 
-  <!-- 2. SAYFA -->
-  <div class="page" id="page2">
-    <h1>🌹 Kalbimin Hikayesi 🌹</h1>
-    <p>Sevgiyle yazılmış bir masalın içinde buluşan iki kalp...</p>
-    <div class="signature">Ömer’den Zehra’ya</div>
+  <div class="photos">
+    <div class="photo"><img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Fotoğraf 1"></div>
+    <div class="photo"><img src="Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Fotoğraf 2"></div>
+    <div class="photo"><img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 3"></div>
+    <div class="photo"><img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Fotoğraf 4"></div>
   </div>
 
-  <!-- 3. SAYFA -->
-  <div class="page" id="page3">
-    <h1>💫 Yıldızların Sana Olan Hissi 💫</h1>
+  <div class="note">💬 "<em>Gülüşü güzel kadınlar papatyaları severmiş</em>"</div>
 
-    <div class="poem">Zehra, bir şiir gibi adın,<br>
-    Ellerimle yazdım kalbimin duvarına.<br>
-    Her hecede sen varsın,<br>
-    Ruhumda yankılanır sesin.<br>
-    Aşkla yaşarım seni.</div>
+  <div style="height:80px;"></div>
+  <div class="signature" aria-hidden="true">Ömer'den Zehra'ya</div>
+</div>
 
-    <div class="poem">Zehra, sensiz günler eksik,<br>
-    Ellerimle tam bu kalp.<br>
-    Hayat seninle başka,<br>
-    Rüya gibi yaşamak bu.<br>
-    Aşkla yazılmış kaderim.</div>
-
-    <div class="poem">Zehra, kalbim sana teslim,<br>
-    Ellerin umut, sesin ilim.<br>
-    Hayatımın en güzel sebebi,<br>
-    Rüyalarımın tek sahibi.<br>
-    Aşkla bağlı bu gönlüm sana.</div>
-
-    <div class="poem">Zehra, sensiz nefes almak zor,<br>
-    Ellerinle hayat bulur bu kor.<br>
-    Her şeyinle güzelsin sen,<br>
-    Ruhumda hep senin izlerin.<br>
-    Aşkla yanan bu kalbim senin.</div>
-
-    <div class="poem">Zehra, sen benim hikâyemsin,<br>
-    Ellerinle yazılmış kaderimsin.<br>
-    Hayatımın anlamı sensin,<br>
-    Rüyalarımda bile benimsin.<br>
-    Aşkla atan bu kalp senin.</div>
-
-    <div class="signature">Ömer’den Zehra’ya</div>
+<!-- SAYFA 2 -->
+<div class="page" id="page2" role="region" aria-label="İkinci sayfa - kırmızı şiir sayfası">
+  <div class="page2-wrap">
+    <h2 class="page2-title">💫 Yıldızların Sana Olan Hissi 💫</h2>
+    <div class="poem-container">
+      <!-- Buraya verdiğin 5 akrostiş alt alt gelecek -->
+      <div class="poem">
+        Zehra, bir şiir gibi adın,<br>
+        Ellerimle yazdım kalbimin duvarına.<br>
+        Her hecede sen varsın,<br>
+        Ruhumda yankılanır sesin.<br>
+        Aşkla yaşarım seni.
+      </div>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06)">
+      <div class="poem">
+        Zehra, sensiz günler eksik,<br>
+        Ellerinle tam bu kalp.<br>
+        Hayat seninle başka,<br>
+        Rüya gibi yaşamak bu.<br>
+        Aşkla yazılmış kaderim.
+      </div>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06)">
+      <div class="poem">
+        Zehra, kalbim sana teslim,<br>
+        Ellerim umut, sesin ilim.<br>
+        Hayatımın en güzel sebebi,<br>
+        Rüyalarımın tek sahibi.<br>
+        Aşkla bağlı bu gönlüm sana.
+      </div>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06)">
+      <div class="poem">
+        Zehra, sensiz nefes almak zor,<br>
+        Ellerimle hayat bulur bu kor.<br>
+        Her şeyinle güzelsin sen,<br>
+        Ruhumda hep senin izlerin.<br>
+        Aşkla yanan bu kalbim senin.
+      </div>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06)">
+      <div class="poem">
+        Zehra, sen benim hikâyemsin,<br>
+        Ellerimle yazılmış kaderimsin.<br>
+        Hayatımın anlamı sensin,<br>
+        Rüyalarımda bile benimsin.<br>
+        Aşkla atan bu kalp senin.
+      </div>
+    </div>
   </div>
 
-  <!-- Geçiş okları -->
-  <div id="prev" class="arrow">⬅️</div>
-  <div id="next" class="arrow">➡️</div>
+  <div style="flex:1;"></div>
+  <div class="signature">Ömer'den Zehra'ya</div>
+</div>
 
-  <script>
-    const pages = document.querySelectorAll(".page");
-    const prev = document.getElementById("prev");
-    const next = document.getElementById("next");
-    let currentPage = 0;
+<!-- SAYFA 3 -->
+<div class="page" id="page3" role="region" aria-label="Üçüncü sayfa - şiir grid">
+  <h2 class="page3-title">✨ Yıldızların Sana Olan Hissi ✨</h2>
 
-    function showPage(index) {
-      pages.forEach((page, i) => {
-        page.classList.toggle("active", i === index);
-      });
-    }
+  <div class="poems-grid" aria-label="Arkostişler grid">
+    <!-- 4 sütun x 8 sıra olacak şekilde 32 kutu (buraya total 32 dize bloğu koydum) -->
+    <!-- Sen verdiğin uzun listeyi her bir .poem-box içine tek dize veya 1-2 satır olarak ekleyebilirsin -->
+    <div class="poem-box">Zaman sensiz geçmez, durur gibi,</div>
+    <div class="poem-box">Ellerin yoksa, kalbim kırık gibi.</div>
+    <div class="poem-box">Hayatım senle güzelleşir,</div>
+    <div class="poem-box">Rüyamda bile adın süslenir.</div>
 
-    prev.addEventListener("click", () => {
-      currentPage = (currentPage - 1 + pages.length) % pages.length;
-      showPage(currentPage);
-    });
+    <div class="poem-box">Zehra, gözlerinde kaybolmak isterim,</div>
+    <div class="poem-box">Ellerin avuçlarımda, hep beklerim.</div>
+    <div class="poem-box">Her bakışın bir yıldız gibi parlar,</div>
+    <div class="poem-box">Ruhum seninle huzur arar.</div>
 
-    next.addEventListener("click", () => {
-      currentPage = (currentPage + 1) % pages.length;
-      showPage(currentPage);
-    });
-  </script>
+    <div class="poem-box">Zor geçen günlerin sonunda,</div>
+    <div class="poem-box">Ellerin bir dua gibi yanımda.</div>
+    <div class="poem-box">Hayatımın anlamı oldun sen,</div>
+    <div class="poem-box">Rüyalarımda bile benimsin, bil sen.</div>
 
+    <div class="poem-box">Zehra, bir gül gibi narin,</div>
+    <div class="poem-box">Etrafa yayılır sevgin derin.</div>
+    <div class="poem-box">Her kelimem seninle anlamlı,</div>
+    <div class="poem-box">Rüyalar bile artık senli.</div>
+
+    <div class="poem-box">Zehra, sabahın ışığı gibisin,</div>
+    <div class="poem-box">Ellerde dua, dilimde ismin.</div>
+    <div class="poem-box">Her nefeste seni ararım,</div>
+    <div class="poem-box">Rüzgâr bile adını fısıldar.</div>
+
+    <div class="poem-box">Zehra, sen gülün en saf hali,</div>
+    <div class="poem-box">Esintin ruhumun meltemi.</div>
+    <div class="poem-box">Hayatın anlamı oldun bana,</div>
+    <div class="poem-box">Ruhumun ışığı, kalbimin canı.</div>
+
+    <div class="poem-box">Zehra, her adımda seni ararım,</div>
+    <div class="poem-box">Ellerim titrer adını anarken.</div>
+    <div class="poem-box">Her şey sensiz eksik kalır,</div>
+    <div class="poem-box">Rüzgâr bile seni çağırır.</div>
+
+    <div class="poem-box">Zehra, adın cennetten düşmüş,</div>
+    <div class="poem-box">Ellerin sevdaya gömülmüş.</div>
+    <div class="poem-box">Her gülüşün bahar kokar,</div>
+    <div class="poem-box">Rüyamda bile adın var.</div>
+  </div>
+
+  <div style="flex:1;"></div>
+  <div class="signature">Ömer'den Zehra'ya</div>
+</div>
+
+<!-- Floating hearts creator (JS ile üretiliyor) -->
+<button id="musicBtn" class="music-toggle">🔊 Müzik (Aç/Kapa)</button>
+
+<!-- YouTube embed (gizli görünürlük=hidden; autoplay=muted ile başlar) -->
+<iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/UXK9s54VmxQ?autoplay=1&mute=1&loop=1&playlist=UXK9s54VmxQ" frameborder="0" allow="autoplay; encrypted-media" style="display:none"></iframe>
+
+<script>
+/* --- SAYFA GÖSTERME KONTROLÜ --- */
+const pages = Array.from(document.querySelectorAll('.page'));
+let currentPage = 0;
+function showPage(index) {
+  pages.forEach((p,i)=> p.classList.toggle('active', i===index));
+  currentPage = index;
+  // scroll top of shown page for mobile
+  pages[index].scrollTop = 0;
+}
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  const next = (currentPage - 1 + pages.length) % pages.length;
+  showPage(next);
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  const next = (currentPage + 1) % pages.length;
+  showPage(next);
+});
+
+/* klavye ok tuşları */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowRight') document.getElementById('nextBtn').click();
+  if(e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+});
+
+/* swipe (basit mobil) */
+let startX=null;
+document.addEventListener('touchstart', e=> startX = e.changedTouches[0].clientX);
+document.addEventListener('touchend', e=>{
+  if(startX===null) return;
+  const dx = e.changedTouches[0].clientX - startX;
+  if(dx > 50) document.getElementById('prevBtn').click();
+  if(dx < -50) document.getElementById('nextBtn').click();
+  startX=null;
+});
+
+/* --- Kalpler oluşturma (arıza olursa bu kısmarı kapat) --- */
+function createHeart(){
+  const heart = document.createElement('div');
+  heart.className='heart';
+  heart.textContent = '💖';
+  const left = Math.random() * 100;
+  heart.style.left = left + 'vw';
+  heart.style.fontSize = (Math.random()*16 + 12) + 'px';
+  heart.style.animationDuration = (Math.random()*4 + 4) + 's';
+  document.body.appendChild(heart);
+  setTimeout(()=> heart.remove(), 7000);
+}
+// göz zevki için az kalp
+setInterval(createHeart, 800);
+
+/* --- YouTube gizli player kontrolü --- */
+const yt = document.getElementById('ytplayer');
+let muted = true;
+document.getElementById('musicBtn').addEventListener('click', ()=>{
+  // toggling iframe visibility and sound: browsers block unmuted autoplay; so we show prompt to open Youtube in new tab if needed
+  if(yt.style.display === 'none'){
+    yt.style.display = 'block';
+    alert('Tarayıcı kısıtlamaları nedeniyle otomatik ses çalınmayabilir. Ses açmak için sayfayı yenileyip "Müzik (Aç/Kapa)" tuşuna tekrar bas veya oynatmayı YouTube sayfasında aç.');
+  } else {
+    yt.style.display = 'none';
+  }
+});
+
+/* sayfalar ilk yüklemede 1. sayfayı gösterir */
+showPage(0);
+
+</script>
 </body>
 </html>
