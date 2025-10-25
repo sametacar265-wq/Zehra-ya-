@@ -1,345 +1,237 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Ömer'den Zehra'ya</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zehra'ya 💖</title>
+
 <style>
-  :root{
-    --pink1:#ffc9db;
-    --pink2:#ffb6c1;
-    --dark1:#3b0000;
-    --dark2:#8b0000;
-    --accent:#ff6688;
-    --text:#1b0b0b;
-  }
-  html,body{height:100%;margin:0;font-family:Inter, "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-  body{background:#000; color:#fff; overflow:hidden;}
+body {
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#000;
+  color:white;
+  overflow-x:hidden;
+}
+.page {
+  display:none;
+  height:100vh;
+  width:100%;
+  position:relative;
+  text-align:center;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+.page.active {display:flex;}
 
-/* --- common page container --- */
-  .page {
-    position: absolute;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 28px;
-    box-sizing: border-box;
-  }
-  .page.active { display:flex; }
+/* 🎵 Genel sabit alt yazı */
+.bottom-text {
+  position:absolute;
+  bottom:10px;
+  right:15px;
+  font-size:14px;
+  color:#fff;
+  opacity:0.8;
+}
+.back-btn {
+  position:absolute;
+  bottom:10px;
+  left:15px;
+  color:white;
+  background:none;
+  border:1px solid white;
+  border-radius:8px;
+  padding:5px 12px;
+  cursor:pointer;
+  font-size:13px;
+}
+.back-btn:hover {background:white;color:black;}
 
-/* --- footer signature (right bottom) --- */
-  .signature {
-    position: fixed;
-    right: 14px;
-    bottom: 10px;
-    color:#ffccd6;
-    font-weight:600;
-    font-size:14px;
-    z-index:9999;
-    text-shadow:0 1px 6px rgba(0,0,0,0.5);
-  }
+/* 🌌 1. SAYFA */
+#page1 {
+  background: radial-gradient(circle, #1a1a1a, #000);
+}
+.container {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.qr {
+  width:160px;
+  margin-bottom:25px;
+}
+.menu {
+  display:flex;
+  gap:20px;
+}
+.menu button {
+  background:#ff66a3;
+  color:white;
+  border:none;
+  padding:18px 26px;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.menu button:hover {transform:scale(1.05);background:#ff3385;}
 
-/* =================== PAGE 1 (Giriş) =================== */
-  #page1 {
-    background: linear-gradient(180deg,#1a0000 0%, #3b0000 60%);
-    flex-direction:column;
-    gap:24px;
-    text-align:center;
-  }
-  .hero {
-    max-width:980px;
-    width:100%;
-    display:flex;
-    gap:28px;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-  }
-  .headline {
-    font-size:28px;
-    color:#ffdfe2;
-    line-height:1.2;
-    text-shadow:0 6px 18px rgba(255,80,120,0.07);
-  }
-  .qr-wrap {
-    background:rgba(0,0,0,0.18);
-    padding:18px;
-    border-radius:14px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-  }
-  .qr-wrap img.qr {
-    width:180px; height:180px; display:block; border-radius:10px; background:#fff;
-  }
-  .menu {
-    display:flex; gap:18px; margin-top:6px; flex-wrap:wrap; justify-content:center;
-  }
-  .card-btn {
-    min-width:160px;
-    background:linear-gradient(180deg,#ffb6c1,#ff9aa8);
-    border-radius:14px;
-    padding:14px 18px;
-    color:#30060a;
-    font-weight:700;
-    box-shadow:0 10px 30px rgba(255,90,140,0.12);
-    cursor:pointer;
-    border:0;
-    transition:transform .22s ease, box-shadow .22s ease;
-  }
-  .card-btn:hover{ transform:translateY(-6px); box-shadow:0 18px 40px rgba(255,90,140,0.18); }
+/* 💗 2. SAYFA - Fotoğraflar */
+#page2 {
+  background:#ffe6f2;
+  color:#333;
+  flex-direction:column;
+  overflow-y:auto;
+}
+.gallery {
+  width:100%;
+  max-width:700px;
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+  justify-items:center;
+  padding:40px 20px;
+  z-index:2;
+}
+.gallery img {
+  width:100%;
+  max-width:280px;
+  height:200px;
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow:0 8px 30px rgba(120,40,70,0.12);
+  transition:transform .28s ease, box-shadow .28s;
+  cursor:zoom-in;
+}
+.gallery img:hover {
+  transform:scale(1.05);
+  box-shadow:0 18px 36px rgba(120,40,70,0.18);
+}
+@media (max-width:600px){
+  .gallery {grid-template-columns: 1fr;}
+  .gallery img {max-width:90%;height:240px;}
+}
 
-/* small hint text under QR */
-  .qr-note { color:#ffd8dd; font-size:14px; opacity:0.95; }
+/* 💕 3. SAYFA - Şiirler */
+#page3 {
+  background-color:#ffb6c1;
+  overflow-y:auto;
+}
+@keyframes hearts {
+  0% {transform:translateY(-10vh) scale(0.8);opacity:1;}
+  100% {transform:translateY(110vh) scale(1.2);opacity:0;}
+}
+.heart {
+  position:absolute;
+  color:#ff69b4;
+  font-size:20px;
+  animation:hearts 6s linear infinite;
+}
+.poems {
+  max-width:800px;
+  margin:100px auto 60px auto;
+  color:#000;
+  font-size:17px;
+  text-align:left;
+  line-height:1.6;
+  background:rgba(255,255,255,0.7);
+  border-radius:15px;
+  padding:25px;
+}
+.poems h2 {
+  text-align:center;
+  color:#800000;
+}
 
-/* =================== PAGE 2 (Fotoğraflar, pembe, kalpler) =================== */
-  #page2 {
-    background: linear-gradient(180deg,var(--pink1),var(--pink2));
-    flex-direction:column;
-    overflow:hidden;
-  }
-  .back-left {
-    position:fixed; left:12px; top:12px; z-index:9999;
-    background:rgba(0,0,0,0.65); color:white; border:0; padding:8px 12px; border-radius:10px; cursor:pointer;
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
-  }
-  .gallery {
-    width:100%;
-    max-width:960px;
-    display:flex;
-    gap:18px;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:center;
-    padding:40px 20px;
-    z-index:2;
-  }
-  .gallery img {
-    width:220px;
-    height:220px;
-    object-fit:cover;
-    border-radius:14px;
-    box-shadow:0 8px 30px rgba(120,40,70,0.12);
-    transition:transform .28s ease, box-shadow .28s;
-    cursor:zoom-in;
-  }
-  .gallery img:hover { transform:scale(1.05); box-shadow:0 18px 36px rgba(120,40,70,0.18); }
-
-/* dense hearts container (page2) */
-  .hearts-layer { position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
-
-/* heart element style */
-  .heart {
-    position:absolute;
-    font-size:22px;
-    transform-origin:center;
-    animation-timing-function: linear;
-    will-change: transform, opacity;
-    text-shadow:0 2px 10px rgba(0,0,0,0.25);
-  }
-
-/* =================== PAGE 3 (Şiirler, koyu kırmızı-siyah) =================== */
-  #page3 {
-    background: linear-gradient(180deg,var(--dark1),var(--dark2));
-    overflow:auto;
-    padding:40px 20px;
-    align-items:flex-start;
-  }
-  .back-left-3 {
-    position:fixed; left:12px; top:12px; z-index:9999;
-    background:rgba(255,255,255,0.06); color:#ffdfe3; border:0; padding:8px 12px; border-radius:10px; cursor:pointer;
-    box-shadow:0 6px 20px rgba(0,0,0,0.25);
-  }
-  .page3-inner { max-width:880px; margin:0 auto; width:100%; }
-  .page3-title { text-align:center; color:#ffd7d9; font-size:28px; margin-bottom:20px; text-shadow:0 10px 30px rgba(255,120,120,0.06); }
-  .poem-block { background: rgba(255,255,255,0.03); border-radius:12px; padding:18px; margin-bottom:18px; color:#ffe9e9; line-height:1.6; font-size:16px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
-
-/* responsive tweaks */
-  @media (max-width:820px){
-    .gallery img { width:44%; height:180px; }
-    .card-btn { min-width:140px; padding:12px 14px; }
-    .qr-wrap img.qr { width:140px; height:140px; }
-  }
-  @media (max-width:480px){
-    .gallery img { width:88%; height:220px; }
-    .headline { font-size:20px; }
-    .card-btn { min-width:120px; padding:10px 12px; font-size:16px; }
-  }
+/* ⭐ Yazı tipi ve başlık */
+h1 {
+  font-size:26px;
+  color:#ffccff;
+  margin-bottom:20px;
+}
 </style>
 </head>
 <body>
 
-<!-- signature appears on every page -->
-<div class="signature">Ömer’den Zehra’ya ❤️</div>
-
-<!-- PAGE 1 -->
-<section id="page1" class="page active" aria-label="Giriş">
-  <div class="hero" role="main">
-    <div class="headline">Her satırında seni, her notasinda bizi bulacaksın ❤️</div>
-
-    <div class="qr-wrap" aria-hidden="false">
-      <!-- QR: points to your site -->
-      <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=https://sametacar265-wq.github.io/Zehra-ya-/&size=300x300" alt="Site QR kodu">
-      <div class="qr-note">Kareyi tarayın ya da butonlardan devam edin</div>
-    </div>
-
-    <div class="menu" role="navigation" aria-label="Gezinti">
-      <button class="card-btn" id="toPhotos">📸 Fotoğraflar</button>
-      <button class="card-btn" id="toPoems">💌 Şiirler</button>
+<!-- 🌌 SAYFA 1 -->
+<div id="page1" class="page active">
+  <div class="container">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://sametacar265-wq.github.io/Zehra-ya-/" class="qr" alt="QR">
+    <h1>💫 Yıldızların sana olan hissi 💫</h1>
+    <div class="menu">
+      <button onclick="goTo('page2')">📸 Fotoğraflar</button>
+      <button onclick="goTo('page3')">💌 Şiirler</button>
     </div>
   </div>
-</section>
+  <div class="bottom-text">Ömer’den Zehra’ya ❤️</div>
+</div>
 
-<!-- PAGE 2 -->
-<section id="page2" class="page" aria-hidden="true" aria-label="Fotoğraflar">
-  <button class="back-left" id="backFrom2" aria-label="Geri">⬅ Ana Sayfa</button>
+<!-- 💗 SAYFA 2 -->
+<div id="page2" class="page">
+  <button class="back-btn" onclick="goTo('page1')">⬅ Geri</button>
+  <h1>💗 Fotoğraflar 💗</h1>
+  <div class="gallery">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="foto1">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="foto2">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="foto3">
+    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="foto4">
+  </div>
+  <div class="bottom-text">Ömer’den Zehra’ya ❤️</div>
+</div>
 
-  <div class="gallery" role="region" aria-label="Fotoğraf Galerisi">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg" alt="Fotoğraf 1">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg" alt="Fotoğraf 2">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg" alt="Fotoğraf 3">
-    <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg" alt="Fotoğraf 4">
+<!-- 💕 SAYFA 3 -->
+<div id="page3" class="page">
+  <button class="back-btn" onclick="goTo('page1')">⬅ Geri</button>
+  <div class="poems">
+    <h2>💫 Yıldızların Sana Olan Hissi 💫</h2>
+
+    <p>
+    Zehra, bir şiir gibi adın,<br>
+    Ellerimle yazdım kalbimin duvarına.<br>
+    Her hecede sen varsın,<br>
+    Ruhumda yankılanır sesin.<br>
+    Aşkla yaşarım seni.
+    </p><hr>
+
+    <p>
+    Zehra, sensiz günler eksik,<br>
+    Ellerinle tam bu kalp.<br>
+    Hayat seninle başka,<br>
+    Rüya gibi yaşamak bu.<br>
+    Aşkla yazılmış kaderim.
+    </p><hr>
+
+    <p>
+    Zehra, kalbim sana teslim,<br>
+    Ellerin umut, sesin ilim.<br>
+    Hayatımın en güzel sebebi,<br>
+    Rüyalarımın tek sahibi.<br>
+    Aşkla bağlı bu gönlüm sana.
+    </p>
   </div>
 
-  <div class="hearts-layer" id="heartsLayer" aria-hidden="true"></div>
-</section>
-
-<!-- PAGE 3 -->
-<section id="page3" class="page" aria-hidden="true" aria-label="Şiirler">
-  <button class="back-left-3" id="backFrom3" aria-label="Geri">⬅ Ana Sayfa</button>
-  <div class="page3-inner">
-    <div class="page3-title">💫 Yıldızların Sana Olan Hissi 💫</div>
-
-    <article class="poem-block" aria-label="Şiir 1">
-      Zehra, bir şiir gibi adın,<br>
-      Ellerinle yazdım kalbimin duvarına.<br>
-      Her hecede sen varsın,<br>
-      Ruhumda yankılanır sesin.<br>
-      Aşkla yaşarım seni.
-    </article>
-
-    <article class="poem-block" aria-label="Şiir 2">
-      Zehra, sensiz günler eksik,<br>
-      Ellerinle tam bu kalp.<br>
-      Hayat seninle başka,<br>
-      Rüya gibi yaşamak bu.<br>
-      Aşkla yazılmış kaderim.
-    </article>
-
-    <article class="poem-block" aria-label="Şiir 3">
-      Zehra, kalbim sana teslim,<br>
-      Ellerin umut, sesin ilim.<br>
-      Hayatımın en güzel sebebi,<br>
-      Rüyalarımın tek sahibi.<br>
-      Aşkla bağlı bu gönlüm sana.
-    </article>
-  </div>
-</section>
+  <div class="bottom-text">Ömer’den Zehra’ya ❤️</div>
+</div>
 
 <script>
-/* ---------------- page navigation ---------------- */
-const page1 = document.getElementById('page1');
-const page2 = document.getElementById('page2');
+function goTo(pageId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+}
+
+// 💗 Kalpler animasyonu (3. sayfa)
 const page3 = document.getElementById('page3');
-const toPhotos = document.getElementById('toPhotos');
-const toPoems = document.getElementById('toPoems');
-const backFrom2 = document.getElementById('backFrom2');
-const backFrom3 = document.getElementById('backFrom3');
-
-function showPage(target){
-  // hide all
-  [page1,page2,page3].forEach(p=>{
-    p.classList.remove('active');
-    p.setAttribute('aria-hidden','true');
-  });
-  // show selected
-  target.classList.add('active');
-  target.setAttribute('aria-hidden','false');
-  // ensure scrolling top for long pages
-  target.scrollTop = 0;
-}
-toPhotos.addEventListener('click',()=> showPage(page2));
-toPoems.addEventListener('click',()=> showPage(page3));
-backFrom2.addEventListener('click',()=> showPage(page1));
-backFrom3.addEventListener('click',()=> showPage(page1));
-
-/* ---------------- hearts (dense / lively) for page2 ----------------
-   We will spawn many hearts while page2 active but limit concurrently to avoid slowdowns.
-*/
-const heartsLayer = document.getElementById('heartsLayer');
-let heartCount = 0;
-const MAX_HEARTS = 80; // cap concurrent hearts
-
-function spawnHeart(){
-  if (!page2.classList.contains('active')) return;
-  if (heartCount >= MAX_HEARTS) return;
-  const h = document.createElement('div');
-  h.className = 'heart';
-  h.textContent = '💗';
-  // random horizontal start (allow slightly off-screen)
-  const left = Math.random() * 110 - 5; // -5vw .. 105vw
-  h.style.left = left + 'vw';
-  // random size and slight rotation
-  const size = 16 + Math.random() * 28;
-  h.style.fontSize = size + 'px';
-  const duration = 2 + Math.random()*3; // 2-5s
-  h.style.animationDuration = duration + 's';
-  // random horizontal drift using transform animation via JS
-  heartsLayer.appendChild(h);
-  heartCount++;
-  // remove after animation end
-  setTimeout(()=>{
-    if (h && h.parentNode) h.parentNode.removeChild(h);
-    heartCount--;
-  }, (duration*1000)+200);
-}
-
-// spawn hearts aggressively while page2 active
-let heartsInterval = null;
-function startHearts(){
-  if (heartsInterval) return;
-  heartsInterval = setInterval(()=>{
-    // spawn 1-3 hearts per tick
-    const n = 1 + Math.floor(Math.random()*3);
-    for(let i=0;i<n;i++) spawnHeart();
-    // if too many hearts, slightly slow down spawn
-    if (heartCount > MAX_HEARTS*0.6){
-      // pause briefly
-    }
-  }, 180); // every 180ms spawn small bursts
-}
-function stopHearts(){
-  if (heartsInterval){ clearInterval(heartsInterval); heartsInterval = null; }
-}
-
-// start/stop based on page changes
-const observer = new MutationObserver(()=> {
-  if (page2.classList.contains('active')) startHearts(); else stopHearts();
-});
-observer.observe(page2, { attributes:true });
-
-/* ensure initial page state - page1 active by default */
-showPage(page1);
-
-/* accessibility: keyboard navigation: Left->back to main, Right->go forward */
-document.addEventListener('keydown', (e)=>{
-  if (e.key === 'Escape') { showPage(page1); }
-  if (e.key === 'ArrowLeft'){
-    if (page2.classList.contains('active') || page3.classList.contains('active')) showPage(page1);
-  }
-});
-
-/* optional: click photos to open in new tab (full size) */
-document.querySelectorAll('.gallery img').forEach(img=>{
-  img.style.cursor = 'pointer';
-  img.addEventListener('click', ()=> {
-    const src = img.src;
-    window.open(src, '_blank', 'noopener');
-  });
-});
+setInterval(()=>{
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML = '💗';
+  heart.style.left = Math.random()*100+'vw';
+  heart.style.animationDuration = (4+Math.random()*3)+'s';
+  page3.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+},300);
 </script>
+
 </body>
 </html>
