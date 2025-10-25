@@ -1,214 +1,229 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ömer ve Zehra</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Georgia', serif;
-    overflow: hidden;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zehra’ya</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: "Poppins", sans-serif;
+      color: white;
+      overflow: hidden;
+      transition: background 1s ease;
+    }
 
-  section {
-    width: 100%;
-    height: 100vh;
-    display: none;
-    position: relative;
-    text-align: center;
-  }
+    /* SAYFALAR GENEL */
+    section {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      transition: opacity 1s ease;
+      padding: 20px;
+    }
+    section.active {display: flex; opacity: 1;}
+    section.inactive {opacity: 0;}
 
-  .active {
-    display: block;
-  }
+    /* BUTONLAR */
+    .button {
+      background: rgba(255,255,255,0.15);
+      padding: 12px 25px;
+      border-radius: 8px;
+      color: white;
+      border: 1px solid white;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    .button:hover {background: rgba(255,255,255,0.3);}
 
-  h1 {
-    font-size: 2.2em;
-    margin-top: 60px;
-    color: white;
-  }
+    /* ALT YAZI */
+    .footer-text {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: #ffcccc;
+    }
+    .back-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 14px;
+      color: #ffcccc;
+      cursor: pointer;
+    }
 
-  /* === 1. SAYFA === */
-  #home {
-    background: radial-gradient(circle at center, #222, #000);
-    color: white;
-  }
+    /* 📄 1. SAYFA */
+    #home {
+      background: linear-gradient(to bottom right, #000000, #330000);
+    }
+    #home h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #ffcccc;
+    }
+    .box-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .box {
+      width: 140px;
+      height: 80px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #ffcccc;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      color: #ffcccc;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .box:hover {background: rgba(255,255,255,0.3);}
 
-  #home img {
-    width: 180px;
-    margin-top: 40px;
-  }
+    /* 📸 2. SAYFA */
+    #photos {
+      background-color: pink;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 80%;
+      max-width: 400px;
+    }
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid white;
+      transition: 0.4s;
+    }
+    .photo-grid img:hover {transform: scale(1.05);}
+    .heart {
+      position: absolute;
+      top: -10px;
+      color: #ff66b2;
+      font-size: 20px;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(110vh);}
+    }
 
-  .menu {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 60px;
-  }
-
-  .menu button {
-    padding: 15px 25px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 15px;
-    background: #ffb6c1;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .menu button:hover {
-    background: #ff6699;
-    transform: scale(1.05);
-  }
-
-  /* === 2. SAYFA === */
-  #photos {
-    background-color: pink;
-    overflow: hidden;
-  }
-
-  .falling-heart {
-    position: absolute;
-    color: #ff66b2;
-    animation: fall 5s linear infinite;
-  }
-
-  @keyframes fall {
-    0% { top: -10%; opacity: 1; }
-    100% { top: 110%; opacity: 0; }
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 40px;
-  }
-
-  .photo-grid img {
-    width: 100%;
-    border-radius: 10px;
-    transition: 0.3s;
-  }
-
-  .photo-grid img:hover {
-    transform: scale(1.05);
-  }
-
-  /* === 3. SAYFA === */
-  #poems {
-    background: linear-gradient(black, darkred);
-    color: white;
-    padding: 40px;
-    text-align: center;
-    overflow-y: auto;
-  }
-
-  .poem {
-    margin-bottom: 40px;
-    font-size: 1.1em;
-    line-height: 1.6;
-  }
-
-  /* === SABİT YAZILAR === */
-  .bottom-right {
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-    font-size: 0.9em;
-    color: white;
-    opacity: 0.8;
-  }
-
-  .back-btn {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
-</style>
+    /* 💌 3. SAYFA */
+    #poems {
+      background: linear-gradient(to bottom right, #000, #330000);
+      color: #ffcccc;
+      padding: 30px;
+      text-align: left;
+      overflow-y: auto;
+    }
+    #poems h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #ffcccc;
+    }
+    .poem {
+      margin-bottom: 25px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- === 1. SAYFA === -->
-<section id="home" class="active">
-  <h1>💫 Yıldızların Sana Olan Hissi 💫</h1>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://sametacar265-wq.github.io/Zehra-ya-/" alt="QR">
-  <div class="menu">
-    <button onclick="goTo('photos')">📸 Fotoğraflar</button>
-    <button onclick="goTo('poems')">📝 Şiirler</button>
-  </div>
-  <div class="bottom-right">Ömer’den Zehra’ya ❤️</div>
-</section>
+  <!-- 🌟 1. SAYFA -->
+  <section id="home" class="active">
+    <h1>💫 Yıldızların Sana Olan Hissi 💫</h1>
+    <img src="Görseller/qr.png" alt="QR Kod" width="120" style="margin-bottom:20px;">
+    <div class="box-container">
+      <div class="box" onclick="goTo('photos')">📸 Fotoğraflar</div>
+      <div class="box" onclick="goTo('poems')">💌 Şiirler</div>
+    </div>
+    <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+  </section>
 
-<!-- === 2. SAYFA (Fotoğraflar) === -->
-<section id="photos">
-  <h1>📸 Anılarımız</h1>
-  <div class="photo-grid">
-    <img src="16cca18f-8a94-427f-960f-ce1d1038c943.jpeg">
-    <img src="53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg">
-    <img src="5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg">
-    <img src="911cbe1b-cf01-4233-8e28-900d02f12850.jpeg">
-  </div>
-  <button class="back-btn" onclick="goTo('home')">⬅️</button>
-  <div class="bottom-right">Ömer’den Zehra’ya ❤️</div>
-</section>
+  <!-- 📸 2. SAYFA -->
+  <section id="photos">
+    <div class="back-btn" onclick="goTo('home')">⬅️ Geri</div>
+    <div class="photo-grid">
+      <img src="Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg">
+      <img src="Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg">
+      <img src="Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg">
+      <img src="Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg">
+    </div>
+    <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+  </section>
 
-<!-- === 3. SAYFA (Şiirler) === -->
-<section id="poems">
-  <h1>💖 Aşkın Satırları 💖</h1>
+  <!-- 💌 3. SAYFA -->
+  <section id="poems">
+    <div class="back-btn" onclick="goTo('home')">⬅️ Geri</div>
+    <h2>💫 Yıldızların Sana Olan Hissi 💫</h2>
 
-  <div class="poem">
-    Zehra, adın cennetten düşmüş,<br>
-    Ellerin sevdaya gömülmüş.<br>
-    Her gülüşün bahar kokar,<br>
-    Rüyamda bile adın var.<br>
-    Aşkla yanarım her defa.
-  </div>
+    <div class="poem">
+      Zehra, adın cennetten düşmüş,<br>
+      Ellerin sevdaya gömülmüş.<br>
+      Her gülüşün bahar kokar,<br>
+      Rüyamda bile adın var.<br>
+      Aşkla yanarım her defa.
+    </div>
 
-  <div class="poem">
-    Zehra, kalbimin incisi,<br>
-    Ellerin bir mucize gibi.<br>
-    Her bakışında kaybolurum,<br>
-    Ruhum seninle huzur bulur.<br>
-    Aşkınla yaşarım her günü.
-  </div>
+    <div class="poem">
+      Zehra, kalbimin incisi,<br>
+      Ellerin bir mucize gibi.<br>
+      Her bakışında kaybolurum,<br>
+      Ruhum seninle huzur bulur.<br>
+      Aşkınla yaşarım her günü.
+    </div>
 
-  <div class="poem">
-    Zehra, adını duyunca gülümserim,<br>
-    Ellerin dokunsa çözülür dertlerim.<br>
-    Hayatımın en güzel nedeni,<br>
-    Rüyalarımda bile seninle ben.<br>
-    Aşkınla tamam bu hikâyem.
-  </div>
+    <div class="poem">
+      Zehra, adını duyunca gülümserim,<br>
+      Ellerin dokunsa çözülür dertlerim.<br>
+      Hayatımın en güzel nedeni,<br>
+      Rüyalarımda bile seninle ben.<br>
+      Aşkınla tamam bu hikâyem.
+    </div>
 
-  <button class="back-btn" onclick="goTo('home')">⬅️</button>
-  <div class="bottom-right">Ömer’den Zehra’ya ❤️</div>
-</section>
+    <div class="footer-text">Ömer’den Zehra’ya ❤️</div>
+  </section>
 
-<script>
-  function goTo(pageId) {
-    document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-    document.getElementById(pageId).classList.add("active");
-  }
+  <script>
+    function goTo(page) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      const next = document.getElementById(page);
+      next.classList.add('active');
 
-  // Kalplerin düşmesi
-  const heartContainer = document.getElementById('photos');
-  for (let i = 0; i < 30; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('falling-heart');
-    heart.innerHTML = '💗';
-    heart.style.left = Math.random() * 100 + '%';
-    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-    heart.style.fontSize = (10 + Math.random() * 20) + 'px';
-    heartContainer.appendChild(heart);
-  }
-</script>
+      if (page === 'photos') spawnHearts();
+    }
+
+    // 💗 Kalpler animasyonu
+    function spawnHearts() {
+      const photos = document.getElementById('photos');
+      photos.querySelectorAll('.heart').forEach(h => h.remove());
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💗';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (3 + Math.random() * 4) + 's';
+        photos.appendChild(heart);
+      }
+    }
+  </script>
 
 </body>
 </html>
