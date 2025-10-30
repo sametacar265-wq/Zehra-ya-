@@ -1,215 +1,144 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zehra'ya</title>
-<style>
-/* GENEL */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Lucida Handwriting', cursive;
-  color: white;
-  text-align: center;
-  overflow: hidden;
-}
-.page {
-  display: none;
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
-  top: 0; left: 0;
-}
-.active { display: block; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aliya & Ömer 💞</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffe6eb, #e0c3fc);
+      color: #333;
+      text-align: center;
+    }
 
-/* ANA SAYFA */
-#home {
-  background: linear-gradient(180deg, #ff99cc, #ff66b3);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#home h1 { font-size: 2.5em; margin-bottom: 10px; }
-#home img { width: 120px; margin: 15px; border-radius: 10px; }
+    header {
+      padding: 20px;
+      font-size: 2em;
+      font-weight: bold;
+      color: #c03a5b;
+    }
 
-.container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.box {
-  background: rgba(255,255,255,0.2);
-  border: 2px solid white;
-  border-radius: 15px;
-  padding: 15px 25px;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-.box:hover { transform: scale(1.1); }
+    nav {
+      margin: 10px;
+    }
 
-/* FOTOĞRAFLAR SAYFASI */
-#photos {
-  background-color: pink;
-  position: relative;
-}
-#photos img {
-  width: 45%;
-  margin: 5px;
-  border-radius: 10px;
-  border: 2px solid white;
-}
+    nav button {
+      background: #c03a5b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 20px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-/* ŞİİRLER SAYFASI */
-#poems {
-  background: linear-gradient(180deg, #ffcccc, #ffe6e6);
-  padding: 20px;
-  overflow-y: auto;
-}
-.poem {
-  margin: 20px auto;
-  width: 80%;
-  font-size: 1em;
-  background: rgba(255,255,255,0.1);
-  padding: 10px;
-  border-radius: 10px;
-}
+    nav button:hover {
+      background: #a02c49;
+    }
 
-/* SÖZLER SAYFASI */
-#quotes {
-  background: linear-gradient(180deg, #d36aff, #ff99cc);
-  overflow: hidden;
-  position: relative;
-}
-.quote {
-  margin: 10px auto;
-  width: 80%;
-  font-size: 1.1em;
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  padding: 8px;
-}
+    section {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.5s;
+    }
 
-/* KALPLER ANİMASYONU */
-.heart {
-  position: absolute;
-  top: -50px;
-  font-size: 25px;
-  animation: fall 5s linear infinite;
-}
-@keyframes fall {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
+    section.active {
+      display: block;
+    }
 
-/* SABİT YAZILAR VE TUŞLAR */
-.footer {
-  position: absolute;
-  bottom: 10px;
-  right: 15px;
-  font-size: 1.1em;
-}
-.back {
-  position: absolute;
-  bottom: 10px;
-  left: 15px;
-  font-size: 1.5em;
-  cursor: pointer;
-}
-</style>
+    footer {
+      margin-top: 40px;
+      font-style: italic;
+      color: #c03a5b;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    audio {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ANA SAYFA -->
-<div id="home" class="page active">
-  <h1>Zehra'ya 💞</h1>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://sametacar265-wq.github.io/Zehra-ya-/" alt="QR Kodu">
-  <div class="container">
-    <div class="box" onclick="showPage('photos')">📸 Fotoğraflar</div>
-    <div class="box" onclick="showPage('poems')">📜 Şiirler</div>
-    <div class="box" onclick="showPage('quotes')">💌 Sözler</div>
-  </div>
-  <div class="footer">Ömer’den Zehra’ya ❤️</div>
-</div>
+  <header>💞 Aliya & Ömer 💞</header>
 
-<!-- FOTOĞRAFLAR -->
-<div id="photos" class="page">
-  <div class="back" onclick="showPage('home')">⬅️</div>
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/16cca18f-8a94-427f-960f-ce1d1038c943.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/53c45bd8-df60-4c16-892e-aa2e1346938d.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/5f3676d2-7352-48a0-bb99-c93c635e2c8a.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/911cbe1b-cf01-4233-8e28-900d02f12850.jpeg">
-  <div class="footer">Ömer’den Zehra’ya ❤️</div>
-</div>
+  <nav>
+    <button onclick="showSection('home')">Ana Sayfa</button>
+    <button onclick="showSection('gallery')">Fotoğraflar</button>
+    <button onclick="showSection('poems')">Şiirler</button>
+    <button onclick="showSection('quotes')">Sözler</button>
+  </nav>
 
-<!-- ŞİİRLER -->
-<div id="poems" class="page">
-  <div class="back" onclick="showPage('home')">⬅️</div>
-  <h2>💫 Yıldızların Sana Olan Hissi 💫</h2>
-  <div class="poem">Zehra, adın cennetten düşmüş...<br>Ellerin sevdaya gömülmüş.<br>Her gülüşün bahar kokar,<br>Rüyamda bile adın var.<br>Aşkla yanarım her defa.</div>
-  <div class="poem">Zehra, kalbimin incisi,<br>Ellerin bir mucize gibi.<br>Her bakışında kaybolurum,<br>Ruhum seninle huzur bulur.<br>Aşkınla yaşarım her günü.</div>
-  <div class="poem">Zehra, adını duyunca gülümserim,<br>Ellerin dokunsa çözülür dertlerim.<br>Hayatımın en güzel nedeni,<br>Rüyalarımda bile seninle ben.<br>Aşkınla tamam bu hikâyem.</div>
-  <div class="footer">Ömer’den Zehra’ya ❤️</div>
-</div>
+  <section id="home" class="active">
+    <h2>Hoş geldin Aliya 🌸</h2>
+    <p>Bu site Ömer’in kalbinden sana armağan 💌  
+    Her satır, her renk, her nota senin için...</p>
+    <audio controls autoplay loop>
+      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_ba8a2efb53.mp3" type="audio/mpeg">
+      Tarayıcın müziği desteklemiyor.
+    </audio>
+  </section>
 
-<!-- SÖZLER -->
-<div id="quotes" class="page">
-  <div class="back" onclick="showPage('home')">⬅️</div>
-  <h2>💜 Sözler 💜</h2>
-  <div id="hearts"></div>
-  <div id="quoteList"></div>
-  <div class="footer">Ömer’den Zehra’ya ❤️</div>
-</div>
+  <section id="gallery">
+    <h2>📸 Bizden Anılar</h2>
+    <div class="gallery">
+      <img src="E09F0301-2683-4304-A727-AFF047BC6F66.jpeg" alt="Foto 1">
+      <img src="2F6AD2B3-1BFB-40EC-8592-7733F2FC1DAE.jpeg" alt="Foto 2">
+      <img src="71A98056-F5EB-42C5-AE42-A6FF1BAB3B69.jpeg" alt="Foto 3">
+      <img src="CC769045-249C-4E0D-9932-0DBB931E0847.jpeg" alt="Foto 4">
+    </div>
+  </section>
 
-<script>
-// SAYFA GEÇİŞİ
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+  <section id="poems">
+    <h2>🌹 Şiirler</h2>
+    <p><i>"Gözlerine baktığımda dünyayı unuturum,  
+    Sesini duyduğumda kalbim huzur bulur."</i></p>
+    <p><i>"Zaman dursa da ellerin elimde kalsa,  
+    Her sabah adını söylesem rüzgâra."</i></p>
+  </section>
 
-// SÖZLER
-const quotes = [
-  "Senin adın geçince kalbim şiir yazar.",
-  "Gözlerinle başlar her sabahım.",
-  "Sensiz zaman, zamansız bir gece gibi.",
-  "Aşkın kalbimin en sessiz yerinde yankılanıyor.",
-  "Bir gülüşün bile kalbime bahar getiriyor.",
-  "Sen yanımdayken dünya susar, sadece biz kalırız.",
-  "Kalbim senin adını ezberledi.",
-  "Sen, dualarımın en güzel kabulüsün.",
-  "Gözlerinde kaybolmak huzurun tanımı.",
-  "Her şeyin bittiği yerde sen başlıyorsun.",
-  "Bir seni sevmek yetti, dünyayı unuttum.",
-  "Sen gülünce her şey güzel olur.",
-  "Aşkın sessiz bir çığlık gibi içimde.",
-  "Bir bakışınla kalbime yerleştin.",
-  "Seninle her şeyin anlamı değişti."
-];
-const quoteList = document.getElementById("quoteList");
-quotes.forEach(q => {
-  const div = document.createElement("div");
-  div.className = "quote";
-  div.textContent = q;
-  quoteList.appendChild(div);
-});
+  <section id="quotes">
+    <h2>💫 Sözler</h2>
+    <p>"Seni düşünmediğim bir an bile, kendimi eksik hissediyorum."</p>
+    <p>"Bir gülüşün dünyamı değiştiriyor Aliya."</p>
+    <p>"Her şeyin bittiği yerde, sen başlıyorsun."</p>
+  </section>
 
-// DÜŞEN EMOJİLER
-const hearts = ["😍","😘","🥰","♥️","💕","💞"];
-function createHeart() {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-  h.style.left = Math.random()*100 + "vw";
-  h.style.animationDuration = (3+Math.random()*4) + "s";
-  document.getElementById("quotes").appendChild(h);
-  setTimeout(() => h.remove(), 5000);
-}
-setInterval(createHeart, 300);
-</script>
+  <footer>Ömer’den Aliya’ya ❤️</footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+  </script>
 
 </body>
 </html>
