@@ -1,220 +1,75 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ömer’den Aliya’ya 💖</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #ffb6c1, #b19cd9);
-    color: white;
-    font-family: "Lucida Handwriting", cursive;
-    text-align: center;
-    overflow-x: hidden;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eda 💗</title>
+    <style>
+        body {
+            background: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
 
-  h1 {
-    margin-top: 40px;
-    font-size: 2.3em;
-  }
+        h1 {
+            font-size: 32px;
+            color: #ff4da6;
+            margin-bottom: 10px;
+        }
 
-  .qr-container img {
-    width: 160px;
-    margin: 20px auto;
-  }
+        .box {
+            background: #1a1a1a;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 1px solid #ff4da6;
+        }
 
-  .container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-top: 50px;
-  }
+        .title {
+            font-size: 22px;
+            color: #ff80c6;
+            margin-bottom: 10px;
+        }
 
-  .box {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    width: 250px;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3em;
-    color: white;
-    transition: 0.3s;
-    cursor: pointer;
-  }
-
-  .box:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: scale(1.05);
-  }
-
-  footer {
-    position: fixed;
-    bottom: 10px;
-    right: 15px;
-    font-size: 1em;
-    color: white;
-  }
-
-  .back-btn {
-    position: fixed;
-    bottom: 10px;
-    left: 15px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    font-size: 0.9em;
-  }
-
-  /* Galeri */
-  .gallery {
-    display: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px;
-  }
-
-  .gallery img {
-    width: 45%;
-    border-radius: 12px;
-    transition: 0.3s;
-  }
-
-  .gallery img:hover {
-    transform: scale(1.05);
-  }
-
-  /* Şiir Sayfası */
-  .poems {
-    display: none;
-    text-align: center;
-    font-size: 1.1em;
-    padding: 30px;
-  }
-
-  .poem {
-    margin-bottom: 30px;
-    line-height: 1.6;
-  }
-
-  /* Sözler */
-  .quotes {
-    display: none;
-    padding: 25px;
-    font-size: 1.2em;
-    text-align: left;
-  }
-
-  .quotes div {
-    margin-bottom: 15px;
-  }
-
-  /* Kalp animasyonu */
-  @keyframes fall {
-    0% { transform: translateY(-10vh); opacity: 1; }
-    100% { transform: translateY(110vh); opacity: 0; }
-  }
-
-  .heart {
-    position: fixed;
-    top: -10px;
-    font-size: 24px;
-    animation: fall linear forwards;
-    z-index: 0;
-  }
-
-  audio {
-    display: none;
-  }
-</style>
+        .soz {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>💫 Yıldızların sana olan hissi 💫</h1>
+    <h1>Eda İçin 💗</h1>
 
-<div class="qr-container">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://sametacar265-wq.github.io/Zehra-ya-/&size=160x160" alt="QR Kod">
-</div>
+    <div class="box">
+        <div class="title">E - D - A Akrostişleri</div>
 
-<div class="container" id="mainMenu">
-  <div class="box" onclick="showSection('gallery')">📸 Fotoğraflar</div>
-  <div class="box" onclick="showSection('poems')">📜 Şiirler</div>
-  <div class="box" onclick="showSection('quotes')">💞 Sözler</div>
-</div>
+        <p class="soz">🌸 **E**llerin dokunduğunda dünyam güzelleşir.</p>
+        <p class="soz">🌸 **D**aima kalbimin en özel yerindesin.</p>
+        <p class="soz">🌸 **A**şkla atan bütün hislerimin sebebisin.</p>
+        <br>
 
-<!-- Fotoğraf Sayfası -->
-<div class="gallery" id="gallery">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/E09F0301-2683-4304-A727-AFF047BC6F66.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/2F6AD2B3-1BFB-40EC-8592-7733F2FC1DAE.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/71A98056-F5EB-42C5-AE42-A6FF1BAB3B69.jpeg">
-  <img src="https://raw.githubusercontent.com/sametacar265-wq/Zehra-ya-/refs/heads/main/Görseller/CC769045-249C-4E0D-9932-0DBB931E0847.jpeg">
-</div>
+        <p class="soz">💗 **E**tki etti bana gözlerin ilk anda.</p>
+        <p class="soz">💗 **D**okundun ruhuma sessizce.</p>
+        <p class="soz">💗 **A**cı değil, huzur oldun kalbime.</p>
+        <br>
 
-<!-- Şiir Sayfası -->
-<div class="poems" id="poems">
-  <div class="poem">Zehra, adın cennetten düşmüş,<br>Ellerin sevdaya gömülmüş.<br>Her gülüşün bahar kokar,<br>Rüyamda bile adın var.<br>Aşkla yanarım her defa.</div>
-  <div class="poem">Zehra, kalbimin incisi,<br>Ellerin bir mucize gibi.<br>Her bakışında kaybolurum,<br>Ruhum seninle huzur bulur.<br>Aşkınla yaşarım her günü.</div>
-  <div class="poem">Zehra, adını duyunca gülümserim,<br>Ellerin dokunsa çözülür dertlerim.<br>Hayatımın en güzel nedeni,<br>Rüyalarımda bile seninle ben.<br>Aşkınla tamam bu hikâyem.</div>
-</div>
+        <p class="soz">✨ **E**trafımda herkes olsa bile.</p>
+        <p class="soz">✨ **D**üşüncem hep sende.</p>
+        <p class="soz">✨ **A**şk sensiz tamamlanmaz bende.</p>
+    </div>
 
-<!-- Sözler Sayfası -->
-<div class="quotes" id="quotes">
-  <div>1. Senin adın geçince kalbim şiir yazar.</div>
-  <div>2. Gözlerinle başlar her sabahım.</div>
-  <div>3. Sensiz zaman, zamansız bir gece gibi.</div>
-  <div>4. Aşkın kalbimin en sessiz yerinde yankılanıyor.</div>
-  <div>5. Bir gülüşün bile kalbime bahar getiriyor.</div>
-  <div>6. Sen yanımdayken dünya susar, sadece biz kalırız.</div>
-  <div>7. Kalbim senin adını ezberledi.</div>
-  <div>8. Sen, dualarımın en güzel kabulüsün.</div>
-  <div>9. Gözlerinde kaybolmak huzurun tanımı.</div>
-  <div>10. Her şeyin bittiği yerde sen başlıyorsun.</div>
-  <div>11. Bir seni sevmek yetti, dünyayı unuttum.</div>
-  <div>12. Sen gülünce her şey güzel olur.</div>
-  <div>13. Aşkın sessiz bir çığlık gibi içimde.</div>
-  <div>14. Bir bakışınla kalbime yerleştin.</div>
-  <div>15. Seninle her şeyin anlamı değişti.</div>
-</div>
+    <div class="box">
+        <div class="title">Kısa Aşk Sözleri</div>
 
-<button class="back-btn" onclick="goBack()">⬅️ Geri</button>
-<footer>Ömer’den Aliya’ya ❤️</footer>
-
-<audio autoplay loop>
-  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Komiku/Komiku_-_Its_Time_for_Adventure/Komiku_-_Its_Time_for_Adventure.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-  const hearts = ['😍','😘','🥰','♥️','💕','💞'];
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (3 + Math.random() * 4) + 's';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
-  }
-  setInterval(createHeart, 400);
-
-  function showSection(section) {
-    document.getElementById('mainMenu').style.display = 'none';
-    document.querySelectorAll('.gallery, .poems, .quotes').forEach(el => el.style.display = 'none');
-    document.getElementById(section).style.display = 'flex';
-  }
-
-  function goBack() {
-    document.querySelectorAll('.gallery, .poems, .quotes').forEach(el => el.style.display = 'none');
-    document.getElementById('mainMenu').style.display = 'flex';
-  }
-</script>
+        <p class="soz">❤️ Sen varsın, dünya tamam.</p>
+        <p class="soz">❤️ Sana bakmak bile yetiyor.</p>
+        <p class="soz">❤️ Kalbimin en sakin yeri sensin.</p>
+        <p class="soz">❤️ Seni düşünmek güzellik katıyor günüme.</p>
+        <p class="soz">❤️ Yanımda olman her şeye değer.</p>
+    </div>
 
 </body>
-</html
+</html>
