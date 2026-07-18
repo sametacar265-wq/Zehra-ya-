@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haticem ❤️</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #ffdeeb; color: #000000; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; position: relative; }
+        #auth-screen { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.4); border-radius: 20px; border: 2px solid #000000; max-width: 450px; width: 90%; z-index: 10; }
+        #auth-screen h1 { font-size: 24px; margin-bottom: 15px; }
+        #main-app { display: none; width: 100%; max-width: 600px; min-height: 100vh; padding: 20px; flex-direction: column; align-items: center; position: relative; z-index: 2; }
+        .header-title { font-size: 38px; font-weight: bold; margin-top: 20px; margin-bottom: 15px; text-align: center; }
+        .poem-intro { text-align: center; font-size: 16px; line-height: 1.6; margin-bottom: 30px; padding: 20px; background: rgba(255, 255, 255, 0.5); border-radius: 15px; border: 1px solid rgba(0,0,0,0.1); white-space: pre-line; font-weight: 500; }
+        .nav-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 30px; }
+        .menu-btn { background-color: #ffb6c1; color: #000000; border: 2px solid #000000; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 0 4px 0px #000000; }
+        .menu-btn:active { transform: translateY(4px); box-shadow: 0 0px 0px #000000; }
+        .menu-btn.active { background-color: #ff69b4; }
+        .content-panel { display: none; width: 100%; background: rgba(255, 255, 255, 0.6); border-radius: 20px; padding: 20px; border: 2px solid #000000; margin-bottom: 40px; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .photo-card { background: #ffffff; padding: 8px; border-radius: 10px; border: 2px solid #000000; }
+        .photo-card img { width: 100%; height: auto; border-radius: 6px; display: block; }
+        .text-block { background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 2px solid #000000; line-height: 1.6; font-size: 15px; }
+        .text-block p { white-space: pre-line; }
+        .text-block strong.title { display: block; margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #000000; padding-bottom: 4px; }
+        .proposal-box { text-align: center; padding: 30px 10px; }
+        .proposal-text { font-size: 22px; font-weight: bold; margin-bottom: 25px; }
+        .proposal-buttons { display: flex; justify-content: center; gap: 20px; position: relative; height: 60px; }
+        .choice-btn { padding: 12px 30px; font-size: 18px; font-weight: bold; border: 2px solid #000000; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 0px #000000; }
+        #yes-btn { background-color: #ff69b4; color: #000000; }
+        #no-btn { background-color: #ffffff; color: #000000; position: absolute; transition: all 0.15s ease; }
+        .heart { position: absolute; font-size: 20px; pointer-events: none; z-index: 1; animation: fall linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 100% { transform: translateY(105vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div id="auth-screen">
+        <h1>🔒 Gizli Sayfa</h1>
+        <p>Bu sayfaya doğrudan erişim engellenmiştir. Yalnızca size özel link ile giriş yapabilirsiniz.</p>
+    </div>
+    <div id="main-app">
+        <div class="header-title">Haticem</div>
+        <div class="poem-intro">Sen geldin, kalbim kendine bir yuva buldu,
+Gözlerin en karanlık geceme sabah oldu.
+Ne zaman adını ansam içim umutla doluyor,
+Aşk dediğim her şey, sende anlam buluyor.</div>
+        <div class="nav-buttons">
+            <button class="menu-btn" onclick="showTab('photos')">fotoğraflar 📸</button>
+            <button class="menu-btn" onclick="showTab('poems')">şiirler 🍷</button>
+            <button class="menu-btn" onclick="showTab('acrostics')">akrostiş 📜</button>
+            <button class="menu-btn" onclick="showTab('diary')">günlük 📔</button>
+        </div>
+        <div id="photos" class="content-panel">
+            <div class="photo-grid">
+                <!-- Resimler Base64 olarak buraya aktarılıyor -->
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ1"></div>
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ2"></div>
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ3"></div>
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ4"></div>
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ5"></div>
+                <div class="photo-card"><img src="data:image/png;base64,İNDİRDİĞİNİZ_DOSYADAKİ_RESİM_VERİLERİ6"></div>
+            </div>
+        </div>
+        <div id="poems" class="content-panel">
+            <div class="text-block"><strong class="title">1. Şiir</strong><p>Aşk, adını kalbime sessizce yazan en güzel hikâye,\nGülüşünle başlayan, sonsuza uzanan bir dua.</p></div>
+            <div class="text-block"><strong class="title">2. Şiir</strong><p>Bir tek elini tutmak bile dünyaya bedel,\nÇünkü senin olduğun yerde, kalbim hep eve döner.</p></div>
+        </div>
+        <div id="acrostics" class="content-panel">
+            <div class="text-block"><strong class="title">1. Akrostiş</strong><p><strong>H</strong>ayatımın en güzel tesadüfüsün,\n<strong>A</strong>şkınla kalbime huzur oldun.\n<strong>T</strong>üm hayallerim seninle tamam,\n<strong>İ</strong>çimde açan en güzel baharsın.\n<strong>C</strong>anımın en kıymetli köşesisin,\n<strong>E</strong>bediyen seveceğim tek kişisin.</p></div>
+            <div class="text-block"><strong class="title">2. Akrostiş</strong><p><strong>H</strong>er gülüşün içimi ısıtır,\n<strong>A</strong>dını duyunca kalbim hızlanır.\n<strong>T</strong>ek dileğim hep yanında olmak,\n<strong>İ</strong>yi ki yollarımız kesişmiş.\n<strong>C</strong>anımdan çok sevdiğim sensin,\n<strong>E</strong>n güzel hikâyem hep sen olacaksın.</p></div>
+            <div class="text-block"><strong class="title">3. Akrostiş</strong><p><strong>H</strong>uzuru gözlerinde buldum,\n<strong>A</strong>şkı seninle tanıdım.\n<strong>T</strong>ek duam hiç ayrılmamak,\n<strong>İ</strong>çimdeki en güzel his sensin.\n<strong>C</strong>esaretim oldun her an,\n<strong>E</strong>n büyük mutluluğum, Hatice’m oldun.</p></div>
+        </div>
+        <div id="diary" class="content-panel">
+            <div class="proposal-box">
+                <div class="proposal-text">Benimle sevgili olur musun? 🌹❤️</div>
+                <div class="proposal-buttons">
+                    <button id="yes-btn" class="choice-btn" onclick="celebrate()">Evet</button>
+                    <button id="no-btn" class="choice-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">Hayır</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const GIZLI_ANAHTAR = "ozel-haticem";
+        const urlParams = new URLSearchParams(window.location.search);
+        const girisKodu = urlParams.get('giris');
+        if (girisKodu === GIZLI_ANAHTAR) { document.getElementById('auth-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'flex'; startHeartRain(); }
+        function showTab(tabId) { const panels = document.querySelectorAll('.content-panel'); panels.forEach(panel => panel.style.display = 'none'); const buttons = document.querySelectorAll('.menu-btn'); buttons.forEach(btn => btn.classList.remove('active')); document.getElementById(tabId).style.display = 'block'; event.currentTarget.classList.add('active'); }
+        function startHeartRain() { const colors = ['#ff3366', '#ff6699', '#ff0033', '#ff4081', '#ff85a2']; setInterval(() => { const heart = document.createElement('div'); heart.classList.add('heart'); heart.innerText = Math.random() > 0.5 ? '❤️' : '💖'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 3 + 3) + 's'; heart.style.color = colors[Math.floor(Math.random() * colors.length)]; heart.style.fontSize = (Math.random() * 12 + 16) + 'px'; document.body.appendChild(heart); setTimeout(() => { heart.remove(); }, 6000); }, 250); }
+        function moveNoButton() { const btn = document.getElementById('no-btn'); const container = document.querySelector('.proposal-box'); const rect = container.getBoundingClientRect(); const maxX = rect.width - btn.offsetWidth - 20; const maxY = 60; const randomX = Math.floor(Math.random() * maxX); const randomY = Math.floor(Math.random() * maxY) - 30; btn.style.left = randomX + 'px'; btn.style.top = randomY + 'px'; }
+        function celebrate() { alert('Dünyanın en mutlu insanı yaptın beni! İyi ki varsın Hatice\'m... ❤️🌹'); for(let i=0; i<60; i++) { setTimeout(() => { const heart = document.createElement('div'); heart.classList.add('heart'); heart.innerText = '❤️'; heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (Math.random() * 1.5 + 1) + 's'; document.body.appendChild(heart); }, i * 40); } }
+    </script>
+</body>
+</html>
